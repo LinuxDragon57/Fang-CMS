@@ -128,3 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# Ignore Database Files
+*.db
