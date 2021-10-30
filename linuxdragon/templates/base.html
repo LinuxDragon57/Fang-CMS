@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+    <head>
+        <meta charset="UTF-8">
+            <title>The Linux Dragon's Blog - {% block subtitle %}{% endblock %}</title>
+    </head>
+    <body>
+        <main>
+            {% block header %}{% endblock %}
+            {% block content %}{% endblock %}
+        </main>
+    </body>
 </html>

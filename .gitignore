@@ -130,3 +130,9 @@ dmypy.json
 
 # Ignore Database Files
 *.db
+
+# Ignore content within the data directory
+data/*
+
+# Ignore old project files
+*_old

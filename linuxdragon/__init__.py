@@ -1,25 +1,21 @@
-import os
 from flask import Flask
-from datetime import date
+import toml
+
+from linuxdragon.Models import db
+from linuxdragon.commands import create_tables, create_admin
+from linuxdragon.auth import auth_bp
+# from linuxdragon.routes import routes_bp
 
 
-def create_app(test_config=None):
+def create_app():
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev'
-    )
 
-    if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        app.config.from_mapping(test_config)
+    app.config.from_file('config.toml', load=toml.load)
 
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
+    db.init_app(app)
+    app.cli.add_command(create_tables)
+    app.cli.add_command(create_admin)
 
-    from linuxdragon.routes import routes
-    routes(app)
+    app.register_blueprint(auth_bp)
 
     return app
