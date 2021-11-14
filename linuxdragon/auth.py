@@ -14,17 +14,17 @@ def login():
         password = request.form['password']
         error = None
 
-        user = Author.query.filter_by(username=username).first()
+        user = Author.query.filter_by(username=username).one_or_none()
 
-        if user is None:
+        if not user:
             error = "Username does not match any users in the database."
-        elif not check_password_hash(user['password'], password):
+        elif not check_password_hash(user.passwd_hash, password):
             error = "Incorrect Password."
 
         if error is None:
             session.clear()
-            session['user_id'] = user['id']
-            return redirect(url_for('blog'))
+            session['user_id'] = user.id
+            return redirect(url_for('admin/new'))
 
         flash(error)
 
@@ -34,6 +34,7 @@ def login():
 @auth_bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
+    flash(user_id)
 
     if user_id is None:
         g.user = None

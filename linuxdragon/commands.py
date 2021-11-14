@@ -1,15 +1,17 @@
 import click
 import re
+import os
 from flask.cli import with_appcontext
+from flask import current_app
 from getpass import getpass
 from werkzeug.security import generate_password_hash
 
 from linuxdragon.Models import db, Author
 
 
-@click.command('create-tables')
+@click.command('create-database')
 @with_appcontext
-def create_tables():
+def create_database():
     db.create_all()
 
 
@@ -22,18 +24,25 @@ def create_admin():
     last_name = input("Enter author's last name: ")
     error = None
 
-    # auth_criteria = re.compile(r'[.\S]   {8,50}')  # Match a string 8 to 50 characters with no whitespace.
-    # name_criteria = re.compile(r'[a-zA-Z]{1,26}')  # Match strings of 1 to 26 letters.
-    # input_check = [
-    #    auth_criteria.match(username),
-    #    auth_criteria.match(password),
-    #    name_criteria.match(first_name),
-    #    name_criteria.match(last_name)
-    #    ]
+    auth_criteria = re.compile(r'^[\S]{8,50}$')  # Match a string of 8 to 50 whitespace-free characters.
+    name_criteria = re.compile(r'^[a-zA-Z]{1,26}$')  # Match strings up to 26 letters.
+    input_check = [
+        auth_criteria.match(username),
+        auth_criteria.match(password),
+        name_criteria.match(first_name),
+        name_criteria.match(last_name)
+    ]
 
-    # for criterion in input_check:
-    #    if criterion is None:
-    #        error = "Missing or Invalid required arguments. Whitespace isn't allowed."
+    for criterion in input_check:
+        print(criterion)
+        if criterion is None:
+            error = """
+            Invalid arguments or missing requirements:
+                ~ Whitespace isn't allowed.
+                ~ The password and username must be at least 8 characters long.
+                ~ Name fields can only contain letters.
+                ~ Empty strings aren't allowed.
+            """
 
     if error is None:
         try:

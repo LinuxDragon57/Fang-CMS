@@ -136,3 +136,6 @@ data/*
 
 # Ignore old project files
 *_old
+
+# Ignore the testing directory
+unit_tests/

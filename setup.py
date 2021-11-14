@@ -9,7 +9,7 @@ setup(
     install_requires=[
         'flask',
         'flask-sqlalchemy',
-        'markdown',
+        'mistune==2.0.0rc1',
         'toml',
         'python-dotenv'
     ],
