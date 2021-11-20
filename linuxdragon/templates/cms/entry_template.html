@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="{{ post_data['post_desc'] }}">
+        <title>{{ post_data['post_title'] }}</title>
+        <link rel="stylesheet" type="text/css" href="https://fonts.codedragon.dev/oxanium/oxanium.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='normalize.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+
+    <body>
+        <a href="{{ url_for('routes.index') }}">
+            <img id="logo" src="{{ url_for('static', filename='images/linuxdragon-logo.svg') }}" alt="LinuxDragon Logo">
+        </a>
+        <header id="titleBar">
+            <h1 class="postTitle">{{ post_data['post_title'] }}</h1>
+            <h2 class="postAuthor">Written by {{ current_user_name }}</h2>
+            <h3 class="postedDate">{{ post_data['date_created'] }}</h3>
+        </header>
+
+        <main>
+            <div id="heading">{{ post_data['post_desc'] }}</div>
+            <div id="content">
+                {{ post_data['post_content'] | safe }}
+            </div>
+            <h4><em>Copyright &copy; {{ post_data['date_created'] }} {{ current_user_name }}</em></h4>
+        </main>
+
+        <footer>
+            <h5>
+                <a class="license" href="https://www.gnu.org/licenses/agpl-3.0.en.html"
+                   target="_blank">{{ copyleft_msg|safe }}</a>
+            </h5>
+        </footer>
+    </body>
+</html>

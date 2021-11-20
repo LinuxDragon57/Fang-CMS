@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Content Manager{% endblock %}
+
+
+{% block navMenuItems %}
+    <style>
+        header, nav {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+
+{% block heading %}
+    <h1>Create A New Post</h1>
+{% endblock %}
+
+
+{% block content %}
+    <form method="post">
+        <label for="title">Title</label>
+        <input name="title" id="title" autofocus required>
+        <label for="description">Description</label>
+        <input name="description" id="description" required>
+        <label for="genres">Genres</label>
+        <select name="genres" id="genres">
+            {% for genre in config['GENRES'] %}
+                <option value="{{ genre }}">{{ genre }}</option>
+            {% endfor %}
+        </select>
+        <label for="entry">Entry</label>
+        <textarea name="entry" id="entry" rows="10" cols="10"></textarea>
+        <input type="submit" value="Create Post">
+    </form>
+{% endblock %}
+
+
+{% block dynamicFooter %}
+    <h6><a href="{{ url_for('auth.logout') }}">Logout</a></h6>
+{% endblock %}
+

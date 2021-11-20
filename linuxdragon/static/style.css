@@ -13,6 +13,14 @@ html {
     * #64B7BC
  */
 
+/* Color pallet based off old site:
+    * #050325
+    * #ADD7F6
+    * #87BFFF
+    * #3F8EFC
+    * #2667FF
+ */
+
 :root {
     --primary-bg-color: #110F1A;
     --bg-accent-color: #0D1628;
@@ -23,4 +31,80 @@ html {
     --accent-color-1: #4EA5D9;
     --accent-color-2: #64B7BC; /* Accent colors 1 & 2 make a really pretty gradient... */
     --accent-color-3: #79C99E;
+    --link-color: #7B4B94;
+}
+
+div#menuContainer {
+    display: none;
+}
+
+body {
+    background-color: var(--primary-bg-color);
+    color: var(--text-color);
+    max-width: 100%;
+    overflow-y: scroll;
+}
+
+h1 {
+    font-size: 5rem;
+    font-family: "Oxanium ExtraBold", sans-serif;
+    text-align: center;
+    color: var(--title-color);
+}
+
+h2 {
+    font-size: 2.25rem;
+    font-family: "Oxanium Bold", sans-serif;
+}
+
+h3 {
+    font-size: 1.8rem;
+    font-family: "Oxanium ExtraBold", sans-serif;
+}
+
+h4 {
+    font-size: 1.44rem;
+    font-family: "Oxanium Medium", sans-serif;
+}
+
+h5 {
+    font-size: 1.15rem;
+    font-family: "Oxanium Regular", sans-serif;
+}
+
+h6 {
+    font-size: 0.92rem;
+    font-family: "Oxanium Light", sans-serif;
+}
+
+p, ul, ol {
+    font-size: 1.25rem;
+    font-family: "Oxanium Medium", sans-serif;
+    text-align: justify;
+    margin: 1em 4em;
+    line-height: 1.5;
+    width: 50rem;
+}
+
+a:link {
+    color: var(--accent-color-1);
+}
+
+a:visited {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: inline-block;
+}
+
+img#logo {
+    height: 128px;
+    width: auto;
+    z-index: 3;
+    padding-top: 1rem;
 }

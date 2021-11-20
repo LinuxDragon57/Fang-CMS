@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 
-{% block subtitle %}Log In{% endblock %}
+{% block title %}Administrator Log In{% endblock %}
 
-{% block header %}
-    <h1> {% block title %}Log In{% endblock %}</h1>
-{% endblock %}
+{% block navMenuItems %}{% endblock %}
+
+{% block heading %}Administrator Log In{% endblock %}
 
 {% block content %}
     <form method="post">
         <label for="username">Username</label>
-        <input name="username" id="username" required>
+        <input name="username" id="username" autofocus required>
         <label for="password">Password</label>
         <input type="password" name="password" id="password" required>
         <input type="submit" value="Log In">
     </form>
 {% endblock %}
+
+{% block dynamicFooter %}{% endblock %}

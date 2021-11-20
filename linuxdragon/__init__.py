@@ -1,13 +1,16 @@
-from flask import Flask
+from datetime import date
+
 import toml
+from flask import Flask
+
 
 from linuxdragon.Models import db
 from linuxdragon.commands import (
-    create_database, create_admin
+    initialize_database, create_admin, create_user, initialize_data_directories
 )
 from linuxdragon.auth import auth_bp
+from linuxdragon.cms import cms_bp
 from linuxdragon.routes import routes_bp
-from linuxdragon.admin import cms_bp
 
 
 def create_app():
@@ -16,11 +19,20 @@ def create_app():
     app.config.from_file('config.toml', load=toml.load)
 
     db.init_app(app)
-    app.cli.add_command(create_database)
+    app.cli.add_command(initialize_database)
     app.cli.add_command(create_admin)
+    app.cli.add_command(create_user)
+    app.cli.add_command(initialize_data_directories)
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(routes_bp)
     app.register_blueprint(cms_bp)
+
+    @app.context_processor
+    def copyleft_msg():
+        current_year = date.today().year
+        return dict(
+            copyleft_msg=f"Copyleft &copy; 2020 &ndash; {current_year} Tyler Gautney &mdash; All Rights Reserved."
+        )
 
     return app

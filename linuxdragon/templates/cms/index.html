@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block navMenuItems %}
+    <ul id="navMenu">
+    <li class="navBtn"><a href="{{ url_for('cms.index') }}">View Current Posts</a></li>
+    <li class="navBtn"><a href="{{ url_for('cms.create') }}">Write New Post</a></li>
+    </ul>
+{% endblock %}
+
+
+
+{% block heading %}
+<h1>Hello, {{ g.user['username'] }}</h1>
+{% endblock %}
+
+
+
+{% block content %}
+
+{% endblock %}
+
+
+
+{% block dynamicFooter %}
+    <h6 class="dynamicFooter"><a href="{{ url_for('auth.logout') }}">Logout</a></h6>
+{% endblock %}

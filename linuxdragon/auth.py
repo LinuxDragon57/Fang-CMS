@@ -24,7 +24,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user.id
-            return redirect(url_for('admin/new'))
+            return redirect(url_for('cms.index'))
 
         flash(error)
 
@@ -34,7 +34,6 @@ def login():
 @auth_bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
-    flash(user_id)
 
     if user_id is None:
         g.user = None
@@ -45,7 +44,8 @@ def load_logged_in_user():
 @auth_bp.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('index'))
+    flash("Successfully logged out.")
+    return redirect(url_for('routes.index'))
 
 
 def login_required(view):
@@ -53,5 +53,7 @@ def login_required(view):
     def wrapped_view(**kwargs):
         if g.user is None:
             return redirect(url_for('auth.login'))
+
         return view(**kwargs)
-    return wrapped_view()
+
+    return wrapped_view

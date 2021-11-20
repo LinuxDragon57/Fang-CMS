@@ -1,23 +1,21 @@
+import os
 import click
 import re
-import os
 from flask.cli import with_appcontext
-from flask import current_app
 from getpass import getpass
 from werkzeug.security import generate_password_hash
+from flask import current_app
 
 from linuxdragon.Models import db, Author
 
 
-@click.command('create-database')
+@click.command('init-db')
 @with_appcontext
-def create_database():
+def initialize_database():
     db.create_all()
 
 
-@click.command('create-admin')
-@with_appcontext
-def create_admin():
+def create_author(is_admin: bool):
     username = input('Enter new username: ')
     password = getpass(prompt='Enter a password for the new user: ', stream=None)
     first_name = input("Enter author's first name: ")
@@ -34,7 +32,6 @@ def create_admin():
     ]
 
     for criterion in input_check:
-        print(criterion)
         if criterion is None:
             error = """
             Invalid arguments or missing requirements:
@@ -47,19 +44,52 @@ def create_admin():
     if error is None:
         try:
             if Author.query.filter_by(username=username).first() is None:
-                admin = Author(
+                user = Author(
                     username=username,
                     passwd_hash=generate_password_hash(password),
                     first_name=first_name,
                     last_name=last_name,
-                    admin=True
+                    admin=is_admin
                 )
-                db.session.add(admin)
+                db.session.add(user)
                 db.session.commit()
-                error = f"Successfully added {username} as an Admin."
+                if is_admin is True:
+                    error = f"Successfully added {username} as an Admin."
+                elif is_admin is False:
+                    error = f"Successfully added {username}."
             else:
                 raise ValueError('DBIntegrityError: ')
         except ValueError as err:
             error = f"{err} {username} is already registered."
 
     print(error)
+
+
+@click.command('create-admin')
+@with_appcontext
+def create_admin():
+    create_author(True)
+
+
+@click.command('create-user')
+@with_appcontext
+def create_user():
+    create_author(False)
+
+
+@click.command('data-mkdirs')
+@with_appcontext
+def initialize_data_directories():
+    if not os.path.isdir(current_app.config['DATA_DIRECTORY']):
+        os.mkdir(current_app.config['DATA_DIRECTORY'])
+        print(f"Created the data directory at {current_app.config['DATA_DIRECTORY']}")
+    else:
+        print(f"The data directory already exists with the current config.")
+
+    for genre in current_app.config['GENRES']:
+        if not os.path.isdir(current_app.config['DATA_DIRECTORY'] + genre):
+            os.mkdir(current_app.config['DATA_DIRECTORY'] + genre)
+            print(f"Created directory: {current_app.config['DATA_DIRECTORY']}{genre}")
+        else:
+            print(f"{current_app.config['DATA_DIRECTORY']}{genre} already exists.")
+
