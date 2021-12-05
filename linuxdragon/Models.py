@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -19,18 +19,12 @@ class Author(db.Model):
 
 class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(21), nullable=False)
-    description = db.Column(db.String(42), nullable=False)
+    title = db.Column(db.String(25), nullable=False)
+    description = db.Column(db.Text(), nullable=False)
     genre = db.Column(db.String(25), nullable=False)
-    content_path = db.Column(db.String(150), nullable=False)
-    date_created = db.Column(db.DateTime(), default=datetime.today())
+    content_path = db.Column(db.Text(), nullable=False)
+    date_created = db.Column(db.DateTime(), default=date.today())
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
 
     def __repr__(self):
         return '<Entry %r>' % self.title
-
-
-# class AuthorEntries(db.Model):
-#    id = db.Column(db.Integer, primary_key=True)
-#    author = db.Column(db.Integer, db.ForeignKey('author.id'))
-#    posts = db.Column(db.Integer, db.ForeignKey('entry.id'))

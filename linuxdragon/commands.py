@@ -23,7 +23,7 @@ def create_author(is_admin: bool):
     error = None
 
     auth_criteria = re.compile(r'^[\S]{8,50}$')  # Match a string of 8 to 50 whitespace-free characters.
-    name_criteria = re.compile(r'^[a-zA-Z]{1,26}$')  # Match strings up to 26 letters.
+    name_criteria = re.compile(r'^[a-zA-Z. ]{1,26}$')  # Match strings up to 26 letters, periods, or spaces.
     input_check = [
         auth_criteria.match(username),
         auth_criteria.match(password),
@@ -92,4 +92,3 @@ def initialize_data_directories():
             print(f"Created directory: {current_app.config['DATA_DIRECTORY']}{genre}")
         else:
             print(f"{current_app.config['DATA_DIRECTORY']}{genre} already exists.")
-

@@ -103,6 +103,7 @@ celerybeat.pid
 
 # Environments
 .env
+.flaskenv
 .venv
 env/
 venv/
@@ -129,13 +130,10 @@ dmypy.json
 .pyre/
 
 # Ignore Database Files
-*.db
+*.sqlite3
 
 # Ignore content within the data directory
 data/*
 
 # Ignore old project files
 *_old
-
-# Ignore the testing directory
-unit_tests/

@@ -4,13 +4,16 @@
     <ul id="navMenu">
     <li class="navBtn"><a href="{{ url_for('cms.index') }}">View Current Posts</a></li>
     <li class="navBtn"><a href="{{ url_for('cms.create') }}">Write New Post</a></li>
+    <li class="navBtn"><a href="{{ url_for('cms.edit') }}">Edit an Existing Post</a></li>
+    <li class="navBtn"><a href="{{ url_for('cms.delete') }}">Delete an Existing Post</a></li>
+    <li class="navBtn"><a href="{{ url_for('cms.account_settings') }}">Manage Account</a></li>
     </ul>
 {% endblock %}
 
 
 
 {% block heading %}
-<h1>Hello, {{ g.user['username'] }}</h1>
+<h1>Hello, {{ current_user_name }}</h1>
 {% endblock %}
 
 

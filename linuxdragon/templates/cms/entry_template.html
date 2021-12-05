@@ -22,7 +22,7 @@
 
         <main>
             <div id="heading">{{ post_data['post_desc'] }}</div>
-            <div id="content">
+            <div id="content" class="post-content">
                 {{ post_data['post_content'] | safe }}
             </div>
             <h4><em>Copyright &copy; {{ post_data['date_created'] }} {{ current_user_name }}</em></h4>

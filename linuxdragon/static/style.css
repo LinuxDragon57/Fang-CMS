@@ -43,6 +43,7 @@ body {
     color: var(--text-color);
     max-width: 100%;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 h1 {
@@ -107,4 +108,75 @@ img#logo {
     width: auto;
     z-index: 3;
     padding-top: 1rem;
+}
+
+header {
+
+}
+
+a.menuContainer {
+    display: none;
+}
+
+nav.sideNav, ul#navMenu {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    width: 30em;
+    position: relative;
+    left: 0;
+}
+
+ul#navMenu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+a.navBtn, li.navItem {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--accent-color-3);
+    font-family: "Oxanium Bold", sans-serif;
+    font-size: x-large;
+    width: max-content;
+    height: 50px;
+    line-height: 1.25;
+    padding: 0 0.5em;
+    margin: 0.25rem;
+    border: none;
+}
+
+li.navItem::before {
+    transform: skew(-20deg);
+    background-image: linear-gradient(to left, var(--accent-color-1), var(--accent-color-3));
+}
+
+main {
+
+}
+
+div#heading {
+
+}
+
+div#content {
+
+}
+
+footer {
+    display: flex;
+    height: 36px;
+    width: 100%;
+    flex-flow: column nowrap;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 3em 1em;
+    position: relative;
+    bottom: 0;
+    background-color: var(--primary-bg-color);
 }

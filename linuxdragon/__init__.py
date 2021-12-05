@@ -32,7 +32,7 @@ def create_app():
     def copyleft_msg():
         current_year = date.today().year
         return dict(
-            copyleft_msg=f"Copyleft &copy; 2020 &ndash; {current_year} Tyler Gautney &mdash; All Rights Reserved."
+            copyleft_msg=f"Copyleft &copy; 2020 &ndash; {current_year} Tyler Gautney"
         )
 
     return app

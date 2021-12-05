@@ -1,10 +1,12 @@
 import functools
-from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
+from flask import (
+    Blueprint, flash, g, redirect, render_template, request, session, url_for, abort
+)
 from werkzeug.security import check_password_hash
 
-from linuxdragon.Models import Author
+from linuxdragon.Models import db, Author
 
-auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
+auth_bp = Blueprint('auth', __name__, url_prefix='/auth/')
 
 
 @auth_bp.route('/login', methods=("GET", "POST"))
@@ -53,7 +55,19 @@ def login_required(view):
     def wrapped_view(**kwargs):
         if g.user is None:
             return redirect(url_for('auth.login'))
+        return view(**kwargs)
 
+    return wrapped_view
+
+
+@login_required
+def admin_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        user_id = session.get('user_id')
+        admin_status: bool = all(db.session.execute(db.select(Author.admin).where(Author.id == user_id)).first())
+        if admin_status:
+            return abort(401)
         return view(**kwargs)
 
     return wrapped_view

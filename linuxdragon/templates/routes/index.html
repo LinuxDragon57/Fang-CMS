@@ -3,7 +3,13 @@
 {% block title %}Here there be a Linux Dragon{% endblock %}
 
 {% block navMenuItems %}
-
+    <ul id="navMenu">
+        {% for genre in config['GENRES'] %}
+            <li class="navItem"><a class="navBtn" href="{{ url_for('routes.genres', genre=genre.replace(' ' , '_').lower()) }}">
+                    {{ genre }}
+            </a></li>
+        {% endfor %}
+    </ul>
 {% endblock %}
 
 
@@ -14,11 +20,16 @@
 
 
 {% block content %}
-
+    {% for post in posts %}
+        <div class="listEntry">
+            <h2 class="entryTitle"> {{ post.title }} </h2>
+            <h3 class="entryDescription"> {{ post.description }}</h3>
+        </div>
+    {% endfor %}
 {% endblock %}
 
 
 
 {% block dynamicFooter %}
-    <h6 class="dynamicFooter"><a href="{{ url_for('auth.login') }}">Administrator Login</a></h6>
+    <a href="{{ url_for('auth.login') }}">Administrator Login</a>
 {% endblock %}
