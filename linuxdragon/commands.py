@@ -1,4 +1,5 @@
 import os
+
 import click
 import re
 from flask.cli import with_appcontext
@@ -23,7 +24,7 @@ def create_author(is_admin: bool):
     error = None
 
     auth_criteria = re.compile(r'^[\S]{8,50}$')  # Match a string of 8 to 50 whitespace-free characters.
-    name_criteria = re.compile(r'^[a-zA-Z. ]{1,26}$')  # Match strings up to 26 letters, periods, or spaces.
+    name_criteria = re.compile(r'^[a-z A-Z.]{1,26}$')  # Match strings up to 26 letters, periods, or spaces.
     input_check = [
         auth_criteria.match(username),
         auth_criteria.match(password),
@@ -77,7 +78,7 @@ def create_user():
     create_author(False)
 
 
-@click.command('data-mkdirs')
+@click.command('mkdatadirs')
 @with_appcontext
 def initialize_data_directories():
     if not os.path.isdir(current_app.config['DATA_DIRECTORY']):
@@ -87,8 +88,13 @@ def initialize_data_directories():
         print(f"The data directory already exists with the current config.")
 
     for genre in current_app.config['GENRES']:
-        if not os.path.isdir(current_app.config['DATA_DIRECTORY'] + genre):
-            os.mkdir(current_app.config['DATA_DIRECTORY'] + genre)
-            print(f"Created directory: {current_app.config['DATA_DIRECTORY']}{genre}")
+        genre = mkpath(genre)
+        if not os.path.isdir(f"{current_app.config['DATA_DIRECTORY']}/{genre}"):
+            os.mkdir(f"{current_app.config['DATA_DIRECTORY']}/{genre}")
+            print(f"Created directory: {current_app.config['DATA_DIRECTORY']}/{genre}")
         else:
-            print(f"{current_app.config['DATA_DIRECTORY']}{genre} already exists.")
+            print(f"{current_app.config['DATA_DIRECTORY']}/{genre} already exists.")
+
+
+def mkpath(s: str):
+    return s.replace(' ', '_').lower()

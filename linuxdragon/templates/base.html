@@ -7,6 +7,7 @@
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" type="text/css" href="https://fonts.codedragon.dev/oxanium/oxanium.css">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='normalize.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='normform.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     </head>
 
@@ -15,12 +16,12 @@
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in messages %}
-                        <h6 class="flash">{{ message }}</h6>
+                        <h6 class="flash" id="notification`">{{ message }}</h6>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
             <a href="{{ url_for('routes.index') }}">
-                <img id="logo" src="{{ url_for('static', filename='images/linuxdragon-logo.svg') }}" alt="LinuxDragon Logo">
+                <img id="dragonhead-logo" src="{{ url_for('static', filename='images/linuxdragon-logo.svg') }}" alt="LinuxDragon Logo">
             </a>
             <a class="menuContainer" href="#">
                 <div class="hamburgerMenu"></div>

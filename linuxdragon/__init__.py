@@ -1,12 +1,11 @@
-from datetime import date
+#!./venv/bin/python
 
+from datetime import date
 import toml
 from flask import Flask
-
-
 from linuxdragon.Models import db
 from linuxdragon.commands import (
-    initialize_database, create_admin, create_user, initialize_data_directories
+    initialize_database, create_admin, create_user, initialize_data_directories, mkpath
 )
 from linuxdragon.auth import auth_bp
 from linuxdragon.cms import cms_bp
@@ -27,12 +26,13 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(routes_bp)
     app.register_blueprint(cms_bp)
+    app.add_template_global(mkpath, 'mkpath')
 
     @app.context_processor
     def copyleft_msg():
         current_year = date.today().year
         return dict(
-            copyleft_msg=f"Copyleft &copy; 2020 &ndash; {current_year} Tyler Gautney"
+            copyleft_msg=f"Copyleft &copy; 2020 &ndash; {current_year} E. L. Jackson"
         )
 
     return app

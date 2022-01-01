@@ -8,30 +8,17 @@ html {
     box-sizing: inherit;
 }
 
-/* Colors to consider:
-    * #0D1628
-    * #64B7BC
- */
-
-/* Color pallet based off old site:
-    * #050325
-    * #ADD7F6
-    * #87BFFF
-    * #3F8EFC
-    * #2667FF
- */
-
 :root {
     --primary-bg-color: #110F1A;
-    --bg-accent-color: #0D1628;
+    --bg-accent-color: #191818; /* #0D1628 */
     --secondary-bg-color: #343232;
     --tertiary-bg-color: #464545;
     --text-color: #EBEBEB;
-    --title-color: #E7BBE3;
+    --title-color: #F2D1C9;
     --accent-color-1: #4EA5D9;
-    --accent-color-2: #64B7BC; /* Accent colors 1 & 2 make a really pretty gradient... */
     --accent-color-3: #79C99E;
     --link-color: #7B4B94;
+    --error-color: #E85F5C;
 }
 
 div#menuContainer {
@@ -39,8 +26,8 @@ div#menuContainer {
 }
 
 body {
-    background-color: var(--primary-bg-color);
-    color: var(--text-color);
+/*    background-color: var(--primary-bg-color);
+    color: var(--text-color); */
     max-width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -48,9 +35,7 @@ body {
 
 h1 {
     font-size: 5rem;
-    font-family: "Oxanium ExtraBold", sans-serif;
-    text-align: center;
-    color: var(--title-color);
+    font-family: "Oxanium SemiBold", sans-serif;
 }
 
 h2 {
@@ -103,7 +88,7 @@ img {
     display: inline-block;
 }
 
-img#logo {
+img#dragonhead-logo {
     height: 128px;
     width: auto;
     z-index: 3;
@@ -112,47 +97,6 @@ img#logo {
 
 header {
 
-}
-
-a.menuContainer {
-    display: none;
-}
-
-nav.sideNav, ul#navMenu {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    height: 100vh;
-    width: 30em;
-    position: relative;
-    left: 0;
-}
-
-ul#navMenu {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    border: none;
-}
-
-a.navBtn, li.navItem {
-    display: inline-block;
-    text-decoration: none;
-    color: var(--accent-color-3);
-    font-family: "Oxanium Bold", sans-serif;
-    font-size: x-large;
-    width: max-content;
-    height: 50px;
-    line-height: 1.25;
-    padding: 0 0.5em;
-    margin: 0.25rem;
-    border: none;
-}
-
-li.navItem::before {
-    transform: skew(-20deg);
-    background-image: linear-gradient(to left, var(--accent-color-1), var(--accent-color-3));
 }
 
 main {
@@ -168,15 +112,14 @@ div#content {
 }
 
 footer {
-    display: flex;
-    height: 36px;
-    width: 100%;
-    flex-flow: column nowrap;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    gap: 3em 1em;
-    position: relative;
-    bottom: 0;
-    background-color: var(--primary-bg-color);
+
+}
+
+div.listEntry, a.postLink {
+    color: inherit;
+    text-decoration: none;
+}
+
+h6#error {
+    color: var(--error-color);
 }

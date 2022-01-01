@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{%  block title %}{{ post_data.title }}{% endblock %}
+
+{% block navMenuItems %}
+    <h1 id="titleBar"> {{ post_data.title }} </h1>
+    <h2 class="postTitle"> Written by {{ post_data.author.full_name }} </h2>
+{% endblock %}
+
+{%  block heading %}
+    <h3 id="description">{{ post_data.description }}</h3>
+{% endblock %}
+
+{% block content %}
+    <h4 id="postedDate">{{ post_data.format_date }}</h4>
+    {{ post_content | safe }}
+    <figcaption>Copyright &copy; {{ post_data.author.full_name }} &mdash; All Rights Reserved</figcaption>
+{% endblock %}
+
+{% block dynamicFooter %}{% endblock %}
