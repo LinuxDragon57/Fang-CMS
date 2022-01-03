@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Content Manager &mdash; Update {{ post_data.title }}{% endblock %}
+
+
+{% block navMenuItems %}
+    <style>
+        header, nav {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+
+{% block heading %}
+    <h1>Update Post <em>{{ post_data.title }}</em></h1>
+{% endblock %}
+
+
+{% block content %}
+    <form class="normform" method="post" action="{{ url_for('cms.update', post_id=post_data.id) }}">
+        <label for="title">Title</label>
+        <input name="title" id="title" value="{{ post_data.title }}" autofocus>
+        <label for="description">Description</label>
+        <input name="description" id="description" value="{{ post_data.description }}">
+        <label for="genres">Genres</label>
+        <select name="genres" id="genres">
+            {% for genre in config['GENRES'] %}
+                {% if genre == post_data.genre %}
+                    <option value="{{ genre }}" selected>{{ genre }}</option>
+                {% else %}
+                    <option value="{{ genre }}">{{ genre }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <label for="entry">Entry</label>
+        <textarea name="entry" id="entry" rows="10" cols="10">{{ post_content }}</textarea>
+        <input type="submit" name="update" value="Update Post">
+        <input type="submit" name="cancel" value="Cancel">
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <h6 class="flash" id="error">{{ message }}</h6>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+
+{% block dynamicFooter %}
+    <h6><a href="{{ url_for('auth.logout') }}">Logout</a></h6>
+{% endblock %}
+

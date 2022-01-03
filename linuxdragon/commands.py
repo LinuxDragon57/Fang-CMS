@@ -1,4 +1,6 @@
 import os
+import sys
+from secrets import compare_digest
 
 import click
 import re
@@ -18,7 +20,14 @@ def initialize_database():
 
 def create_author(is_admin: bool):
     username = input('Enter new username: ')
-    password = getpass(prompt='Enter a password for the new user: ', stream=None)
+    while True:
+        password = getpass(prompt='Enter a password for the new user: ', stream=None)
+        repeated_password = getpass(prompt='Repeat the password:', stream=None)
+        if not compare_digest(password, repeated_password):
+            print('Error: Passwords do not match. Please try again.', file=sys.stderr)
+        else:
+            break
+
     first_name = input("Enter author's first name: ")
     last_name = input("Enter author's last name: ")
     error = None

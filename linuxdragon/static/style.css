@@ -120,6 +120,6 @@ div.listEntry, a.postLink {
     text-decoration: none;
 }
 
-h6#error {
+h6.flash#error {
     color: var(--error-color);
 }

@@ -1,8 +1,8 @@
 import functools
-from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for, abort
-)
-from werkzeug.security import check_password_hash
+from secrets import compare_digest
+
+from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for, abort)
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from linuxdragon.Models import db, Author
 
@@ -60,14 +60,34 @@ def login_required(view):
     return wrapped_view
 
 
+@auth_bp.route('/account_settings', methods=("GET", "POST"))
 @login_required
-def admin_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        user_id = session.get('user_id')
-        admin_status: bool = all(db.session.execute(db.select(Author.admin).where(Author.id == user_id)).first())
-        if admin_status:
-            return abort(401)
-        return view(**kwargs)
+def account_settings():
+    if request.method == "POST":
+        if request.form.get('cancel') == 'Cancel':
+            return redirect(url_for('cms.index'))
+        elif request.form.get('update') == 'Update':
+            current_user = Author.query.get(session.get('user_id'))
+            username = request.form.get('username')
+            new_password = request.form.get('newPassword')
+            repeat_password = request.form.get('repeatPassword')
+            password = request.form.get('password')
+            error = None
 
-    return wrapped_view
+            if not check_password_hash(current_user.passwd_hash, password):
+                error = "Incorrect Password."
+
+            if not compare_digest(new_password, repeat_password):
+                error = "New passwords do not match."
+
+            if error is None:
+                if len(username) > 1:
+                    current_user.username = username
+                if len(new_password) > 1 and len(repeat_password) > 1:
+                    current_user.passwd_hash = generate_password_hash(new_password)
+                db.session.commit()
+                flash(f"Successfully updated your user settings, {current_user.username}")
+
+            flash(error)
+
+    return render_template('auth/user_settings.html')

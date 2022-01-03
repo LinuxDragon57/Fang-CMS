@@ -2,11 +2,11 @@
 
 {% block navMenuItems %}
     <ul id="navMenu">
-    <li class="navBtn"><a href="{{ url_for('cms.index') }}">View Current Posts</a></li>
     <li class="navBtn"><a href="{{ url_for('cms.create') }}">Write New Post</a></li>
-    <li class="navBtn"><a href="{{ url_for('cms.edit') }}">Edit an Existing Post</a></li>
+    <li class="navBtn"><a href="{{ url_for('cms.read') }}">View Current Posts</a></li>
+    <li class="navBtn"><a href="{{ url_for('cms.update') }}">Edit an Existing Post</a></li>
     <li class="navBtn"><a href="{{ url_for('cms.delete') }}">Delete an Existing Post</a></li>
-    <li class="navBtn"><a href="{{ url_for('cms.account_settings') }}">Manage Account</a></li>
+    <li class="navBtn"><a href="{{ url_for('auth.account_settings') }}">Manage Account</a></li>
     </ul>
 {% endblock %}
 
@@ -20,10 +20,28 @@
 
 {% block content %}
     {% for post in posts %}
-        <div class="listEntry">
-            <h2 class="entryTitle"> {{ post.title }} </h2>
-            <h3 class="entryDescription"> {{ post.description }}</h3>
-        </div>
+        {%  if update %}
+            <a class="postLink" href="{{ url_for('cms.update', post_id=post.id) }}">
+                <div class="listEntry">
+                    <h2 class="entryTitle"> {{ post.title }} </h2>
+                    <h3 class="entryDescription"> {{ post.description }}</h3>
+                </div>
+            </a>
+        {% elif delete %}
+            <a class="postLink" href="{{ url_for('cms.delete', post_id=post.id) }}">
+                <div class="listEntry">
+                    <h2 class="entryTitle"> {{ post.title }} </h2>
+                    <h3 class="entryDescription"> {{ post.description }}</h3>
+                </div>
+            </a>
+        {%  else %}
+            <a class="postLink" href="{{ url_for('cms.read', post_id=post.id) }}">
+                <div class="listEntry">
+                    <h2 class="entryTitle"> {{ post.title }} </h2>
+                    <h3 class="entryDescription"> {{ post.description }}</h3>
+                </div>
+            </a>
+        {% endif %}
     {% endfor %}
 {% endblock %}
 
