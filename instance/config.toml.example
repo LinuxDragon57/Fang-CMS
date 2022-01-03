@@ -7,5 +7,6 @@ GENRES = [
     "Science Fiction",
     "Fantasy",
     "Political Fiction",
-    "Technology"
+    "Technology",
+    "Poetry"
  ]
