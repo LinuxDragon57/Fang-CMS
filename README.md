@@ -1,6 +1,6 @@
 # LinuxDragon_CMS
 A blog content management system designed to render content as efficient, static pages using the Flask microframework.
-This project currently is unnamed. For now, it is called linuxdragon_cms because it is a cms for my domain: https://linuxdragon.dev
+This project currently is unnamed. For now, it is called linuxdragon_cms because it is a cms for my domain: https://www.linuxdragon.dev
 
 ## Liscensing and Permissions
 All software, images, and designs are protected copyrighted work in the US and other countries. Copyright :copyright: 2019 E. L. Jackson.
