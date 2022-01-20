@@ -15,9 +15,7 @@ All software, images, and designs are protected copyrighted work in the US and o
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
-If you would like to use this on your own server, you may do so. However, you must follow all guidelines set forth by the Affero General Public License,
-version 3 or later; and you may not use any images or graphics that I upload to this repository, whether by accident or not, in your own copies or distributions.
-Furthermore, I request that you create your own design aesthetic and color scheme.
+If you would like to use this on your own server or project, you may do so. However, you must follow all guidelines set forth by the Affero General Public License, version 3 or later; and you may not use any images or graphics that I upload to this repository, whether by accident or not, in your own copies or distributions. Furthermore, I request that you create your own design aesthetic and color scheme.
 
 ## Releases
 Future iterations of the program will add the following features in order of importance to me:
