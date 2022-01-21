@@ -24,10 +24,12 @@ Future iterations of the program will add the following features in order of imp
       * I am honestly very worried about the login system having vulnerabilities. 
         If you find them, please create a PR.
   2. A More efficient way of retreiving data for displaying the blog posts. 
-      * I recently noticed the existence of a `.html.md` file extension in a URI. 
+      * I recently noticed the existence of a `md.html` file extension in a URI. 
         Since this program uses Markdown for creating and storing content, I'd like 
         to look more into this and see if I can create a less database intesive way of 
         retrieving information.
+      * Originally, I had an implementation that did this, but the method I used created 
+        issues that made it difficult to update posts.
       * If I am able to get the browser to merely render markdown pages as HTML automatically, 
         it will fundamentally change the way it stores files, which will create breakage.
   3. Complete the structural design of the webpages. 
