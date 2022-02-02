@@ -28,3 +28,8 @@ def show_post(genre, post_title):
         return render_template('routes/entry_template.html', post_data=metadata, post_content=content)
     except FileNotFoundError:
         abort(404)
+
+
+@routes_bp.context_processor
+def root_urls():
+    return dict(is_root=True)

@@ -181,3 +181,8 @@ def display_admin_functions():
     if user_id is not None:
         admin_status: bool = all(db.session.execute(db.select(Author.admin).where(Author.id == user_id)).first())
         return dict(is_admin=admin_status)
+
+
+@cms_bp.context_processor
+def cms_urls():
+    return dict(is_root=False)

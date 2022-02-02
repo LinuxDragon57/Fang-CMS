@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
+        {% block MetaInformation %} {% endblock %}
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" type="text/css" href="https://fonts.codedragon.dev/oxanium/oxanium.css">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='normalize.css') }}">
@@ -13,14 +14,7 @@
 
     <body>
         <header>
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <h6 class="flash" id="notification">{{ message }}</h6>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            <a href="{{ url_for('routes.index') }}">
+            <a id="logo" href="{% if is_root %}{{ url_for('routes.index') }}{% else %}{{ url_for('cms.index') }}{% endif %}">
                 <img id="dragonhead-logo" src="{{ url_for('static', filename='images/linuxdragon-logo.svg') }}" alt="LinuxDragon Logo">
             </a>
             <a class="menuContainer" href="#">
@@ -34,6 +28,13 @@
         </header>
 
         <main>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <h6 class="flash" id="notification">{{ message }}</h6>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             <div id="heading">{% block heading %}{% endblock %}</div>
             <div id="content">{% block content %}{% endblock %}</div>
         </main>

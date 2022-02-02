@@ -1,7 +1,7 @@
 import functools
 from secrets import compare_digest
 
-from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for, abort)
+from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from linuxdragon.Models import db, Author
@@ -91,3 +91,8 @@ def account_settings():
             flash(error)
 
     return render_template('auth/user_settings.html')
+
+
+@auth_bp.context_processor
+def auth_urls():
+    return dict(is_root=True)

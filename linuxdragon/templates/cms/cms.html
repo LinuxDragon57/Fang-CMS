@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
+{% block MetaInformation %}<meta name="robots" content="noindex">{% endblock %}
+
+
 {% block navMenuItems %}
     <ul id="navMenu">
-    <li class="navBtn"><a href="{{ url_for('cms.create') }}">Write New Post</a></li>
-    <li class="navBtn"><a href="{{ url_for('cms.read') }}">View Current Posts</a></li>
-    <li class="navBtn"><a href="{{ url_for('cms.update') }}">Edit an Existing Post</a></li>
-    <li class="navBtn"><a href="{{ url_for('cms.delete') }}">Delete an Existing Post</a></li>
-    <li class="navBtn"><a href="{{ url_for('auth.account_settings') }}">Manage Account</a></li>
+    <li class="navItem"><a class="navBtn" href="{{ url_for('cms.create') }}">Write New Post</a></li>
+    <li class="navItem"><a class="navBtn" href="{{ url_for('cms.read') }}">View Current Posts</a></li>
+    <li class="navItem"><a class="navBtn" href="{{ url_for('cms.update') }}">Edit an Existing Post</a></li>
+    <li class="navItem"><a class="navBtn" href="{{ url_for('cms.delete') }}">Delete an Existing Post</a></li>
+    <li class="navItem"><a class="navBtn" href="{{ url_for('auth.account_settings') }}">Manage Account</a></li>
     </ul>
 {% endblock %}
 
