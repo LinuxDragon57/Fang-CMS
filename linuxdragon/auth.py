@@ -1,10 +1,13 @@
 import functools
+import pyotp
 from secrets import compare_digest
 
-from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
+from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for, make_response, abort)
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from linuxdragon.Models import db, Author
+from linuxdragon.security import decrypt
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth/')
 
@@ -12,8 +15,8 @@ auth_bp = Blueprint('auth', __name__, url_prefix='/auth/')
 @auth_bp.route('/login', methods=("GET", "POST"))
 def login():
     if request.method == "POST":
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form.get('username')
+        password = request.form.get('password')
         error = None
 
         user = Author.query.filter_by(username=username).one_or_none()
@@ -23,14 +26,54 @@ def login():
         elif not check_password_hash(user.passwd_hash, password):
             error = "Incorrect Password."
 
-        if error is None:
+        if not error:
             session.clear()
-            session['user_id'] = user.id
-            return redirect(url_for('cms.index'))
+            response = make_response(redirect(url_for('auth.verify_auth')))
+            response.set_cookie(
+                key='pre-auth',
+                value=str(user.id),
+                path=url_for('auth.verify_auth'),
+                max_age=90,
+                secure=True,
+                httponly=True
+            )
+            return response
 
         flash(error)
 
     return render_template('auth/login.html')
+
+
+@auth_bp.route('/verify-auth', methods=("GET", "POST"))
+def verify_auth():
+    user_id = request.cookies.get('pre-auth')
+    if user_id is not None:  # Ensure the user_id has a non-null value.
+        user = Author.query.get(int(user_id))  # Access an instance of the Author class by its id.
+        if user.totp_secret is None:  # If the user doesn't have an MFA method set up.
+            return add_logged_in_user(user)
+        elif user.totp_secret:  # If the user has TOTP set up.
+            if request.method == "POST":
+                password = request.form.get('password')
+                totp_code = request.form.get('totp_code')
+                shared_secret = decrypt(user.totp_secret, password)
+                totp = pyotp.TOTP(shared_secret)
+                del shared_secret  # Remove the shared_secret from memory as soon as we are done with it.
+                if totp.verify(totp_code):
+                    return add_logged_in_user(user)
+                else:
+                    flash("Failed to verify TOTP Method.")
+                    abort(401)
+            else:
+                return render_template('auth/totp.html')
+    else:
+        flash("The time limit to enter TOTP code was exceeded.")
+        abort(408)
+
+
+def add_logged_in_user(user: Author):
+    session.clear()
+    session['user_id'] = user.id
+    return redirect(url_for('cms.index'))
 
 
 @auth_bp.before_app_request
@@ -45,11 +88,13 @@ def load_logged_in_user():
 
 @auth_bp.route('/logout')
 def logout():
+    # Clear the application session and redirect user to an unprivileged page.
     session.clear()
     flash("Successfully logged out.")
     return redirect(url_for('routes.index'))
 
 
+# Function to be used as a decorator for views that need login privileges.
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
@@ -60,6 +105,7 @@ def login_required(view):
     return wrapped_view
 
 
+# Allow the user to change their password or username.
 @auth_bp.route('/account_settings', methods=("GET", "POST"))
 @login_required
 def account_settings():

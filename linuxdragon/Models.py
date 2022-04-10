@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import date
+from secrets import token_urlsafe, randbits
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy import func
@@ -6,49 +7,37 @@ from sqlalchemy import func
 db = SQLAlchemy()
 
 
+# Using Flask-SQLAlchemy, each Class represents an SQL Table.
 class Author(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.SmallInteger, primary_key=True, default=randbits(12))
     username = db.Column(db.String(50), unique=True, nullable=False)
-    passwd_hash = db.Column(db.String(50), unique=True, nullable=False)
+    passwd_hash = db.Column(db.CHAR(102), unique=True, nullable=False)
     first_name = db.Column(db.String(26), unique=False, nullable=False)
     last_name = db.Column(db.String(26), unique=False, nullable=False)
     admin = db.Column(db.Boolean(), default=False)
+    totp_secret = db.relationship('TOTPSecret', uselist=False, backref='author')
     entries = db.relationship('Entry', backref='author', lazy=True)
 
     def __repr__(self):
         return f"<Author '{self.username}'>"
-
-    def __init__(self, username, passwd_hash, first_name, last_name, admin):
-        self.username = username
-        self.passwd_hash = passwd_hash
-        self.first_name = first_name
-        self.last_name = last_name
-        self.admin = admin
 
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
 
 
+# Table is a one-to-many relationship, and stores Metadata for each Author's entries.
 class Entry(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.CHAR(16), primary_key=True, default=token_urlsafe(12))
     title = db.Column(db.String(25), nullable=False)
     description = db.Column(db.Text(), nullable=False)
     genre = db.Column(db.String(25), nullable=False)
     content_path = db.Column(db.Text(), nullable=False)
-    date_created = db.Column(db.DateTime(), nullable=False)
-    author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
+    date_created = db.Column(db.Date(), default=date.today())
+    author_id = db.Column(db.SmallInteger, db.ForeignKey('author.id'))
 
     def __repr__(self):
         return f"<Entry '{self.title}'>"
-
-    def __init__(self, title, description, genre, content_path, author_id):
-        self.title = title
-        self.description = description
-        self.genre = genre
-        self.content_path = content_path
-        self.date_created = datetime.today()
-        self.author_id = author_id
 
     @hybrid_property
     def genre_url(self):
@@ -73,3 +62,16 @@ class Entry(db.Model):
     @format_date.expression
     def format_date(self):
         return func.strftime(self.date_created, "%A, %d %B %Y")
+
+
+# Table is a one-to-one relationship, and stores the encryption information for each author's TOTP Seed.
+class TOTPSecret(db.Model):
+    author_id = db.Column(db.SmallInteger, db.ForeignKey('author.id'), primary_key=True)
+    salt = db.Column(db.String(), nullable=False)
+    cipher_text = db.Column(db.String(), nullable=False)
+    nonce = db.Column(db.String(), nullable=False)
+    tag = db.Column(db.String(), nullable=False)
+    
+    def __repr__(self):
+        return f"<{Author.query.get(self.author_id).username} TOTP Seed>"
+    

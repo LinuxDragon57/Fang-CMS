@@ -5,21 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c383225-0bd0-4944-a4b0-c8f9a15e69de" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/linuxdragon/registration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/linuxdragon/security.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/linuxdragon/templates/auth/totp_mfa.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/linuxdragon_cms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/linuxdragon_cms.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instance/config.toml.example" beforeDir="false" afterPath="$PROJECT_DIR$/instance/config.toml.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linuxdragon/Models.py" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/Models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linuxdragon/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/linuxdragon/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/linuxdragon/cms.py" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/cms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/static/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/auth/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/auth/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/auth/user_settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/auth/user_settings.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/cms/cms.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/cms/cms.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/cms/create_post.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/cms/create_post.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/cms/delete_post.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/cms/delete_post.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/cms/read_post.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/cms/read_post.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/cms/update_post.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/cms/update_post.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linuxdragon/commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/commands.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linuxdragon/registration.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,6 +55,13 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/setup.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/linuxdragon/routes.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/linuxdragon/auth.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/linuxdragon/cms.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/linuxdragon/commands.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -78,13 +82,13 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/instance/config.toml" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Programming/Python/Steam" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="ReaderModeSettings">
     <option name="showLigatures" value="true" />
@@ -108,6 +112,9 @@
       <option name="targetType" value="PATH" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="FLASK_APP" value="$PROJECT_DIR$/linuxdragon" />
+      </envs>
       <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
@@ -195,6 +202,24 @@
       <workItem from="1641758777578" duration="655000" />
       <workItem from="1642878802870" duration="2211000" />
       <workItem from="1643774705928" duration="357000" />
+      <workItem from="1644183360512" duration="3192000" />
+      <workItem from="1644449909574" duration="1161000" />
+      <workItem from="1645030022545" duration="104000" />
+      <workItem from="1645030150072" duration="62000" />
+      <workItem from="1645030258202" duration="4364000" />
+      <workItem from="1645036068240" duration="1085000" />
+      <workItem from="1645051121861" duration="6099000" />
+      <workItem from="1645102267151" duration="13909000" />
+      <workItem from="1645301472538" duration="1955000" />
+      <workItem from="1645319337747" duration="14212000" />
+      <workItem from="1645392519277" duration="32373000" />
+      <workItem from="1645496044814" duration="3748000" />
+      <workItem from="1645745651070" duration="1807000" />
+      <workItem from="1646337155581" duration="1228000" />
+      <workItem from="1646349830190" duration="1198000" />
+      <workItem from="1648752215526" duration="31245000" />
+      <workItem from="1649563168272" duration="368000" />
+      <workItem from="1649568446520" duration="1833000" />
     </task>
     <servers />
   </component>
@@ -205,6 +230,6 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/linuxdragon_cms$Flask__linuxdragon_.coverage" NAME="Flask (linuxdragon) Coverage Results" MODIFIED="1641365177107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/linuxdragon_cms$Flask__linuxdragon_.coverage" NAME="Flask (linuxdragon) Coverage Results" MODIFIED="1649569692415" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

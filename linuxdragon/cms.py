@@ -42,11 +42,9 @@ def create():
             if error is None:
                 try:
                     markdown_file = open(content_path, 'x')
-                    if Entry.query.filter_by(title=post_title).first() is not None:
-                        raise ValueError
                     markdown_file.write(request.form['entry'])
                     markdown_file.close()
-                except(OSError, ValueError):
+                except OSError:
                     error = "Error: A post with that title already exists."
 
                 if error is None:
