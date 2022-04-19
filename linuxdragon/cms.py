@@ -16,7 +16,7 @@ cms_bp = Blueprint('cms', __name__, url_prefix='/cms/')
 @login_required
 def index():
     all_posts = Entry.query.filter_by(author_id=session.get('user_id')).all()
-    return render_template('cms/cms.html', posts=all_posts)
+    return render_template('cms/cms_landing.html', posts=all_posts)
 
 
 @cms_bp.route('/create', methods=("GET", "POST"))
@@ -87,7 +87,7 @@ def update():
     if request.method == "GET":
         if post_id is None:
             current_user_posts = Entry.query.filter_by(author_id=session.get('user_id')).all()
-            return render_template('cms/cms.html', posts=current_user_posts, update=True)
+            return render_template('cms/cms_landing.html', posts=current_user_posts, update=True)
         elif post_id is not None:
             edit_post = Entry.query.filter_by(id=post_id).first_or_404()
             content = open(edit_post.content_path, 'r').read()
@@ -149,7 +149,7 @@ def delete():
     if request.method == "GET":
         if post_id is None:
             current_user_posts = Entry.query.filter_by(author_id=session.get('user_id')).all()
-            return render_template('cms/cms.html', posts=current_user_posts, delete=True)
+            return render_template('cms/cms_landing.html', posts=current_user_posts, delete=True)
         elif post_id is not None:
             del_entry = Entry.query.filter_by(id=post_id).first_or_404()
             content = create_html(open(del_entry.content_path, 'r').read())
@@ -179,8 +179,3 @@ def display_admin_functions():
     if user_id is not None:
         admin_status: bool = all(db.session.execute(db.select(Author.admin).where(Author.id == user_id)).first())
         return dict(is_admin=admin_status)
-
-
-@cms_bp.context_processor
-def cms_urls():
-    return dict(is_root=False)

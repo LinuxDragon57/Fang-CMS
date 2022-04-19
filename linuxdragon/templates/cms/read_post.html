@@ -1,9 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'cms/cms.html' %}
 
-{% block MetaInformation %}<meta name="robots" content="noindex">{% endblock %}
-
-
-{%  block title %}{{ post_data.title }}{% endblock %}
+{%  block subTitle %}{{ post_data.title }}{% endblock %}
 
 {% block navMenuItems %}
     <h1 id="titleBar"> {{ post_data.title }} </h1>
@@ -26,8 +23,4 @@
     <h4 id="postedDate">{{ post_data.format_date }}</h4>
     {{ post_content | safe }}
     <figcaption>Copyright &copy; {{ post_data.author.full_name }} &mdash; All Rights Reserved</figcaption>
-{% endblock %}
-
-{% block dynamicFooter %}
-    <h6><a href="{{ url_for('auth.logout') }}">Logout</a></h6>
 {% endblock %}

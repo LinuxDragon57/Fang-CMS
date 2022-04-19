@@ -24,7 +24,8 @@ def login():
         if not user:
             error = "Username does not match any users in the database."
         elif not check_password_hash(user.passwd_hash, password):
-            error = "Incorrect Password."
+            flash("Failed to authenticate your password.")
+            abort(401)
 
         if not error:
             session.clear()

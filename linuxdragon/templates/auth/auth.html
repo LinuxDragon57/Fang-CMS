@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block metaInformation %}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block title %}
+    LinuxDragon.dev - {% block subTitle %}{% endblock %}
+{% endblock %}
+
+{% block heading %}
+    <h1>LinuxDragon.dev - {% block subHeading %}{% endblock %}</h1>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='auth.css') }}">
+{% endblock %}

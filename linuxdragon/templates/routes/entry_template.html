@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 
-{%  block title %}{{ post_data.title }}{% endblock %}
+{% block metaInformation %}
+    <meta name="description" content="{{ post_data.description }}">
+{% endblock %}
+
+{%  block title %} {{ post_data.title }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='entry_template.css') }}">
+{% endblock %}
 
 {% block navMenuItems %}
     <h1 id="titleBar"> {{ post_data.title }} </h1>
@@ -8,13 +16,11 @@
 {% endblock %}
 
 {%  block heading %}
-    <h3 id="description">{{ post_data.description }}</h3>
+    <h3 id="description"> {{ post_data.description }} </h3>
 {% endblock %}
 
 {% block content %}
-    <h4 id="postedDate">{{ post_data.format_date }}</h4>
+    <h4 id="postedDate"> {{ post_data.format_date }} </h4>
     {{ post_content | safe }}
     <figcaption>Copyright &copy; {{ post_data.author.full_name }} &mdash; All Rights Reserved</figcaption>
 {% endblock %}
-
-{% block dynamicFooter %}{% endblock %}

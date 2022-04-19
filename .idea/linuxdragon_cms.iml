@@ -8,9 +8,12 @@
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/data" />
       <excludeFolder url="file://$MODULE_DIR$/instance" />
+      <excludeFolder url="file://$MODULE_DIR$/linuxdragon/old_templates" />
+      <excludeFolder url="file://$MODULE_DIR$/LinuxDragon_CMS.egg-info" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (linuxdragon_cms)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="oxanium" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />

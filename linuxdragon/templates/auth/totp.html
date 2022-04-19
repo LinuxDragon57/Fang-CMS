@@ -1,13 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'auth/auth.html' %}
 
-{% block MetaInformation %}<meta name="robots" content="noindex">{% endblock %}
-
-
-{% block title %}Enter TOTP Code - LinuxDragon.dev{% endblock %}
+{% block title %}TOTP Verification{% endblock %}
 
 {% block navMenuItems %}{% endblock %}
 
-{% block heading %}<h1>CMS Log In</h1>{% endblock %}
+{% block subHeading %}
+    TOTP Verification
+{% endblock %}
 
 {% block content %}
     <form class="normform" method="post">

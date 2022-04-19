@@ -1,18 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'auth/auth.html' %}
 
-{% block MetaInformation %}<meta name="robots" content="noindex">{% endblock %}
-
-
-{% block navMenuItems %}
+{% block subTitle %}
+    {{ g.user['username'] }}'s Account Settings
 {% endblock %}
 
-
-
-{% block heading %}
-    <h1>{{ g.user['username'] }} - Update Account Information</h1>
+{% block subHeading %}
+    {{ g.user['username'] }}'s Account Settings
 {% endblock %}
-
-
 
 {% block content %}
     <form class="normform" method="post">
@@ -29,8 +23,6 @@
     </form>
 {% endblock %}
 
-
-
 {% block dynamicFooter %}
-    <h6 class="dynamicFooter"><a href="{{ url_for('auth.logout') }}">Logout</a></h6>
+    <a id="logoutBtn" href="{{ url_for('auth.logout') }}">Logout</a>
 {% endblock %}

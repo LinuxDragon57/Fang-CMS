@@ -1,12 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'cms/cms.html' %}
 
-{% block MetaInformation %}<meta name="robots" content="noindex">{% endblock %}
-
-
-{%  block title %} Content Manager &mdash; Delete {{ post_data.title }}{% endblock %}
+{%  block subTitle %} Delete {{ post_data.title }}{% endblock %}
 
 {% block navMenuItems %}
-    <h1 id="titleBar"> {{ post_data.title }} </h1>
+    <h1 id="titleBar"> <strong>Delete</strong> {{ post_data.title }} </h1>
     <h2 class="postTitle"> Written by {{ post_data.author.full_name }} </h2>
         <h4>Are you sure you want to delete this post?</h4>
         <a href="{{ url_for('cms.index') }}">
@@ -25,8 +22,4 @@
     <h4 id="postedDate">{{ post_data.format_date }}</h4>
     {{ post_content | safe }}
     <figcaption>Copyright &copy; {{ post_data.author.full_name }} &mdash; All Rights Reserved</figcaption>
-{% endblock %}
-
-{% block dynamicFooter %}
-    <h6><a href="{{ url_for('auth.logout') }}">Logout</a></h6>
 {% endblock %}

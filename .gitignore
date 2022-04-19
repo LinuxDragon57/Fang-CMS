@@ -133,7 +133,17 @@ dmypy.json
 *.sqlite3
 
 # Ignore content within the data directory
-data/*
+/data/*
 
 # Ignore old project files
 *_old
+
+# Ignore vanilla CSS and JavaScript Files
+*.js
+*.css
+
+# Ignore node_modules, lest ye be inescapably sucked in
+/node_modules/
+
+# Ignore user-generated SVG files
+/data/*.svg
