@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    <form class="normform" method="post">
+    <form class="normform" id="accountSettings" method="post">
         <label for="username">Change Username</label>
         <input name="username" id="username" autofocus placeholder="{{ g.user['username'] }}">
         <label for="newPassword">New Password</label>
@@ -19,7 +19,9 @@
         <label for="password">Current Password</label>
         <input type="password" name="password" id="password" required>
         <input type="submit" name="update" value="Update">
-        <input type="submit" name="cancel" value="Cancel">
+        <a id="btnLink" href="{{ url_for('cms.index') }}">
+            <input id="cancelBtn" type="button" name="cancel" value="Cancel">
+        </a>
     </form>
 {% endblock %}
 

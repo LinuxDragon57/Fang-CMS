@@ -5,57 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c383225-0bd0-4944-a4b0-c8f9a15e69de" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/_base.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/_normform.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/auth.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/auth.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/auth.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/cms.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/cms.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/cms.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/entry_template.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/entry_template.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/entry_template.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/landing_page.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/landing_page.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/landing_page.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/static/ui.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/templates/auth/auth.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linuxdragon/templates/cms/cms_landing.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/linuxdragon_cms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/linuxdragon_cms.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/linuxdragon/templates/error_pages/405.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LinuxDragon57_totp.eps" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LinuxDragon57_totp.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linuxdragon/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/linuxdragon/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/linuxdragon/cms.py" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/cms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/static/images/linuxdragon-logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/static/images/logo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/static/normalize.css" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/static/_normalize.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/static/normform.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/static/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/auth/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/auth/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/auth/totp.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/auth/totp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linuxdragon/commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/commands.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linuxdragon/static/_base.scss" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/static/_base.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linuxdragon/static/_normform.scss" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/static/_normform.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linuxdragon/static/cms.scss" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/static/cms.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linuxdragon/static/ui.ts" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/static/ui.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/auth/auth.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/auth/auth.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/linuxdragon/templates/auth/user_settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/auth/user_settings.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/linuxdragon/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/cms/cms.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/cms/cms.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/cms/cms_landing.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/cms/cms_landing.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/linuxdragon/templates/cms/create_post.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/cms/create_post.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/linuxdragon/templates/cms/delete_post.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/cms/delete_post.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/linuxdragon/templates/cms/read_post.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/cms/read_post.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/linuxdragon/templates/cms/update_post.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/cms/update_post.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/error_pages/401.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/error_pages/401.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/error_pages/403.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/error_pages/403.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/error_pages/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/error_pages/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/error_pages/408.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/error_pages/408.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/routes/about.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/routes/entry_template.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/routes/entry_template.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linuxdragon/templates/routes/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/linuxdragon/templates/routes/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.svg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,9 +35,9 @@
         <option value="Python Script" />
         <option value="CSS File" />
         <option value="JavaScript File" />
-        <option value="HTML File" />
         <option value="package.json" />
         <option value="SCSS File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -114,20 +81,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "WebServerToolWindowFactoryState": "false",
-    "list.type.of.created.stylesheet": "SCSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "settings.typescriptcompiler",
-    "ts.external.directory.path": "/home/deblad/Projects/web-dev/linuxdragon_cms/node_modules/typescript/lib"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;SCSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.typescriptcompiler&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/deblad/Projects/web-dev/linuxdragon_cms/node_modules/typescript/lib&quot;
   }
-}]]></component>
+}</component>
   <component name="ReaderModeSettings">
     <option name="showLigatures" value="true" />
   </component>
@@ -265,7 +232,12 @@
       <workItem from="1649959217366" duration="36591000" />
       <workItem from="1650146417259" duration="543000" />
       <workItem from="1650147298364" duration="13575000" />
-      <workItem from="1650299850525" duration="22257000" />
+      <workItem from="1650299850525" duration="24352000" />
+      <workItem from="1650390590669" duration="1178000" />
+      <workItem from="1650469377960" duration="19079000" />
+      <workItem from="1650517387690" duration="11335000" />
+      <workItem from="1650635498395" duration="4583000" />
+      <workItem from="1650682514208" duration="914000" />
     </task>
     <servers />
   </component>
@@ -275,6 +247,7 @@
       <list>
         <option value="$PROJECT_DIR$/linuxdragon/static/ui.js" />
         <option value="$PROJECT_DIR$/linuxdragon/static/ui.js.map" />
+        <option value="$PROJECT_DIR$/linuxdragon/static/ui.js.map" />
       </list>
     </option>
   </component>
@@ -282,6 +255,6 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/linuxdragon_cms$Flask__linuxdragon_.coverage" NAME="Flask (linuxdragon) Coverage Results" MODIFIED="1650321059388" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/linuxdragon_cms$Flask__linuxdragon_.coverage" NAME="Flask (linuxdragon) Coverage Results" MODIFIED="1650681371971" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

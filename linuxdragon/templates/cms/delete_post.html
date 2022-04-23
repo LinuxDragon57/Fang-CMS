@@ -6,12 +6,14 @@
     <h1 id="titleBar"> <strong>Delete</strong> {{ post_data.title }} </h1>
     <h2 class="postTitle"> Written by {{ post_data.author.full_name }} </h2>
         <h4>Are you sure you want to delete this post?</h4>
+    <div id="actionBtns">
         <a href="{{ url_for('cms.index') }}">
-            <button type="submit" formmethod="get">No, Do Not Delete this Post</button>
+            <button type="submit" formmethod="get" id="submitBtn">No, Do Not Delete this Post</button>
         </a>
-        <form action="{{ url_for('cms.delete', post_id=post_data.id) }}" method="POST">
-            <button type="submit" formmethod="post">Yes, Delete this Post</button>
-        </form>
+        <a href="{{ url_for('cms.index') }}">
+            <button id="cancelBtn">Yes, Delete this Post</button>
+        </a>
+    </div>
 {% endblock %}
 
 {%  block heading %}

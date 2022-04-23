@@ -30,12 +30,4 @@ def create_app():
     app.register_blueprint(cms_bp)
     app.add_template_global(mkpath, 'mkpath')
 
-    # Allow these template variables to be used application-wide
-    @app.context_processor
-    def copyleft_msg():
-        current_year = date.today().year
-        return dict(
-            copyleft_msg=f"Copyleft &copy; 2020 &ndash; {current_year} E. L. Jackson"
-        )
-
     return app

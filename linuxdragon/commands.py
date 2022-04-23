@@ -37,7 +37,7 @@ def create_author(is_admin: bool):
     last_name = input("Enter author's last name: ")
     error = None
 
-    auth_criteria = re.compile(r'^[\S]{8,50}$')  # Match a string of 8 to 50 whitespace-free characters.
+    auth_criteria = re.compile(r'^\S{8,50}$')  # Match a string of 8 to 50 whitespace-free characters.
     name_criteria = re.compile(r'^[a-z A-Z.]{1,26}$')  # Match strings up to 26 letters, periods, or spaces.
     # Using python's regex library, scrub the data to ensure it doesn't break the database and ensure it makes sense.
     input_check = [
@@ -122,7 +122,7 @@ def initialize_data_directories():
     if not os.path.isdir(f"{current_app.config['DATA_DIRECTORY']}/entries"):
         os.mkdir(f"{current_app.config['DATA_DIRECTORY']}/entries")
 
-    # Iterate through the avaliable "GENRES" defined in the TOML file
+    # Iterate through the available "GENRES" defined in the TOML file
     # and create directories for them if they do not exist
     for genre in current_app.config['GENRES']:
         genre_path = f"{current_app.config['DATA_DIRECTORY']}/entries/{mkpath(genre)}"
@@ -136,4 +136,7 @@ def initialize_data_directories():
 
 # Data is stored in human-readable format, but URLs and paths do not need spaces and uppercase letters.
 def mkpath(s: str):
-    return s.replace(' ', '_').lower()
+    if s:
+        return s.replace(' ', '_').lower()
+    else:
+        return "NULL"

@@ -260,7 +260,7 @@ form.normform input[type=reset] {
   border-radius: 4px;
   cursor: pointer;
   display: inline-block;
-  margin: 0;
+  margin: 1rem 0;
   padding: 12px 15px;
   position: relative;
   -webkit-appearance: none;
@@ -268,11 +268,11 @@ form.normform input[type=reset] {
   appearance: none;
   width: 100%;
   top: 0;
+  &:hover {
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.1);
+  }
 }
-form.normform input[type=submit]:hover,
-form.normform input[type=reset]:hover {
-  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.1);
-}
+
 form.normform input[type=submit]:focus {
   border-color: rgba(0,0,0,0.6);
 }
@@ -283,10 +283,11 @@ form.normform input[type="submit"] {
   background: var(--nf-main-color);
   border: 1px solid #4A90E2;
   color: white;
+  &:hover {
+    background: var(--nf-main-color-hover-color);
+  }
 }
-form.normform input[type=submit]:hover {
-  background: var(--nf-main-color-hover-color);
-}
+
 form.normform input[type="reset"] {
   background: white;
   border: 1px solid lightgrey;
@@ -295,10 +296,11 @@ form.normform input[type="reset"] {
 
 form.normform .inline-buttons {
   display: flex;
+  & input:first-of-type {
+    margin-right: 10px;
+  }
 }
-form.normform .inline-buttons input:first-of-type {
-  margin-right: 10px;
-}
+
 form.normform .inline-buttons input[type=submit],
 form.normform .inline-buttons input[type=reset] {
   width: 50%;

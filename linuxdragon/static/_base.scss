@@ -37,25 +37,25 @@ h1 {
 }
 
 h2 {
-  font-size: 2.25rem;
+  font-size: 3rem;
   font-family: "Oxanium Bold", sans-serif;
-  color: var(--accent-color-1);
+  color: var(--accent-color);
   padding: 0;
   margin-top: 0;
 }
 
 h3 {
-  font-size: 1.8rem;
+  font-size: 2.25rem;
   font-family: "Oxanium ExtraBold", sans-serif;
 }
 
 h4 {
-  font-size: 1.44rem;
+  font-size: 1.8rem;
   font-family: "Oxanium Medium", sans-serif;
 }
 
 h5 {
-  font-size: 1.15rem;
+  font-size: 1.44rem;
   font-family: "Oxanium Regular", sans-serif;
 }
 
@@ -71,6 +71,16 @@ p, ul, ol {
   margin: 1em 4em;
   line-height: 1.5;
   width: 50rem;
+}
+
+button:not(#menuBtn) {
+  font-size: 1.8rem;
+  font-family: "Oxanium ExtraBold", sans-serif;
+  padding: 0.25rem;
+  margin: 0;
+  width: 5rem;
+  height: auto;
+  border-radius: 10px;
 }
 
 a:link {
@@ -94,13 +104,6 @@ div#layout {
   position: relative;
   left: 0;
   padding-left: 0;
-}
-
-main {
-  padding: 0 2em;
-  max-width: 800px;
-  margin: 0 auto 50px;
-  line-height: 1.6em;
 }
 
 header {
@@ -253,4 +256,69 @@ a#loginBtn:hover, a#logoutBtn:hover {
 a#loginBtn:active, a#logoutBtn:active {
   box-shadow: 0 3px #263943;
   transform: translateY(6px);
+}
+
+main {
+  width: 100%;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+a.postLink, div.listEntry {
+
+}
+
+h2#entryTitle {
+
+}
+
+h3#entryDescription {
+
+}
+
+a.btnLink {
+
+}
+
+div#actionBtns {
+
+}
+
+button#cancelBtn {
+  color: var(--secondary-bg-color);
+  background-color: var(--error-color);
+}
+
+button#submitBtn {
+
+}
+
+div#flashedMessage {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: max-content;
+  margin: 0;
+  padding: 0.10rem;
+  background-color: var(--error-color);
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  & h4 {
+    color: var(--secondary-bg-color);
+    font-family: "Oxanium ExtraBold", sans-serif;
+    font-weight: 900;
+  }
+  & button#closeMsg {
+    background-color: transparent;
+    color: var(--secondary-bg-color);
+    width: 3rem;
+    border: solid 0.5px transparent;
+    cursor: pointer;
+  }
 }

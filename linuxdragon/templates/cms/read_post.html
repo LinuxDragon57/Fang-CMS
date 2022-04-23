@@ -5,14 +5,16 @@
 {% block navMenuItems %}
     <h1 id="titleBar"> {{ post_data.title }} </h1>
     <h2 class="postTitle"> Written by {{ post_data.author.full_name }} </h2>
-    <a href="{{ url_for('cms.update', post_id=post_data.id) }}">
-        <button type="submit" formmethod="get">Update this Post</button></a>
-    <a href="{{ url_for('cms.delete', post_id=post_data.id) }}">
-        <button type="submit" formmethod="get">Delete this Post</button>
-    </a>
-    <a href="{{ url_for('cms.index') }}">
-        <button type="submit" formmethod="get">Return Home</button>
-    </a>
+    <div id="actionBtns">
+        <a class="btnLink" href="{{ url_for('cms.update', post_id=post_data.id) }}">
+            <button type="submit" formmethod="get" id="submitBtn">Update this Post</button></a>
+        <a class="btnLink" href="{{ url_for('cms.delete', post_id=post_data.id) }}">
+            <button type="submit" formmethod="get">Delete this Post</button>
+        </a>
+        <a class="btnLink" href="{{ url_for('cms.index') }}" id="cancelBtn">
+            <button type="submit" formmethod="get">Return Home</button>
+        </a>
+    </div>
 {% endblock %}
 
 {%  block heading %}

@@ -68,7 +68,7 @@ def create():
 @cms_bp.route('/read')
 @login_required
 def read():
-    post_id = request.args.get('post_id', None,  int)
+    post_id = request.args.get('post_id')
     if post_id is None:
         return redirect(url_for('cms.index'))
     elif post_id is not None:

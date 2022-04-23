@@ -18,20 +18,23 @@
 
 {% block content %}
     <form class="normform" method="post">
-        <label for="title">Title</label>
-        <input name="title" id="title" autofocus>
-        <label for="description">Description</label>
-        <input name="description" id="description">
-        <label for="genres">Genres</label>
-        <select name="genres" id="genres">
-            {% for genre in config['GENRES'] %}
-                <option value="{{ genre }}">{{ genre }}</option>
-            {% endfor %}
-        </select>
-        <label for="entry">Entry</label>
-        <textarea name="entry" id="entry" rows="10" cols="10"></textarea>
-        <input type="submit" name="create" value="Create Post">
-        <input type="submit" name="cancel" value="Cancel">
+        <fieldset>
+        <legend>Write a New Post: </legend>
+            <label for="title">Title</label>
+            <input name="title" id="title" autofocus>
+            <label for="description">Description</label>
+            <input name="description" id="description">
+            <label for="genre">Genres</label>
+            <select name="genre" id="genre">
+                {% for genre in config['GENRES'] %}
+                    <option value="{{ genre }}">{{ genre }}</option>
+                {% endfor %}
+            </select>
+            <label for="entry">Entry</label>
+            <textarea name="entry" id="entry" rows="10" cols="10"></textarea>
+            <input type="submit" name="create" value="Create Post">
+            <input type="submit" name="cancel" value="Cancel">
+        </fieldset>
     </form>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
