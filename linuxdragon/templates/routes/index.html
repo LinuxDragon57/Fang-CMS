@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'routes/routes.html' %}
 
 {% block metaInformation %}
     <meta name="description" content="">
@@ -6,28 +6,12 @@
 
 {% block title %} Here there be a Linux Dragon {% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='landing_page.css') }}">
-{% endblock %}
-
-{% block navMenuItems %}
-    <ul id="navMenu">
-        <li id="navItem"><a id="navBtn" href="{{ url_for('routes.index') }}">
-            Home
-        </a></li>
-        {% for genre in config['GENRES'] %}
-            <li id="navItem"><a id="navBtn" href="{{ url_for('routes.genres', genre=mkpath(genre)) }}">
-                    {{ genre }}
-            </a></li>
-        {% endfor %}
-    </ul>
-{% endblock %}
-
 {% block heading %}
     <h1>Here there be a<br>Linux Dragon</h1>
 {% endblock %}
 
 {% block content %}
+    <div class="postsList">
     {% for post in posts %}
         <a class="postLink" href="{{ url_for('routes.show_post', genre=post.genre_url, post_title=post.title_url) }}">
             <div class="listEntry">
@@ -36,6 +20,7 @@
             </div>
         </a>
     {% endfor %}
+    </div>
 {% endblock %}
 
 {% block dynamicFooter %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='entry_template.css') }}">
+{% endblock %}
+
+{% block navMenuItems %}
+    <ul id="navMenu">
+        <li id="navItem"><a id="navBtn" href="{{ url_for('routes.index') }}">
+            Home
+        </a></li>
+        {% for genre in config['GENRES'] %}
+            <li id="navItem"><a id="navBtn" href="{{ url_for('routes.genres', genre=mkpath(genre)) }}">
+                {{ genre }}
+            </a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+

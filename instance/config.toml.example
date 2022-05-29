@@ -1,5 +1,4 @@
 SQLALCHEMY_DATABASE_URI = "sqlite:////<path>/<to>/<data>/<dir>/<file.sqlite3>"
-SECRET_KEY = "dev" # Change to something more secret
 SQLALCHEMY_TRACK_MODIFICATIONS = "False"
 APP_URI = "http://localhost:5000"
 DATA_DIRECTORY = "/<path>/<to>/<data>/<dir>" # Do not leave a trailing slash here.
@@ -7,7 +6,7 @@ GENRES = [
     "Realistic Fiction",
     "Science Fiction",
     "Fantasy",
-    "Political Fiction",
+    "Dystopian Fiction",
     "Technology",
     "Poetry"
  ]

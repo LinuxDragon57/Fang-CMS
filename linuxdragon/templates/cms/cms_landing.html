@@ -2,21 +2,12 @@
 
 {% block subTitle %}{{ current_user_name }}'s Content{% endblock %}
 
-{% block navMenuItems %}
-    <ul id="navMenu">
-    <li id="navItem"><a id="navBtn" href="{{ url_for('cms.create') }}">Write New Post</a></li>
-    <li id="navItem"><a id="navBtn" href="{{ url_for('cms.read') }}">View Current Posts</a></li>
-    <li id="navItem"><a id="navBtn" href="{{ url_for('cms.update') }}">Edit an Existing Post</a></li>
-    <li id="navItem"><a id="navBtn" href="{{ url_for('cms.delete') }}">Delete an Existing Post</a></li>
-    <li id="navItem"><a id="navBtn" href="{{ url_for('auth.account_settings') }}">Manage Account</a></li>
-    </ul>
-{% endblock %}
-
 {% block heading %}
 <h1>Hello, {{ current_user_name }}</h1>
 {% endblock %}
 
 {% block content %}
+    <div class="postsList">
     {% for post in posts %}
         {%  if update %}
             <a class="postLink" href="{{ url_for('cms.update', post_id=post.id) }}">
@@ -32,7 +23,7 @@
                     <h3 class="entryDescription"> {{ post.description }}</h3>
                 </div>
             </a>
-        {%  else %}
+        {% else %}
             <a class="postLink" href="{{ url_for('cms.read', post_id=post.id) }}">
                 <div class="listEntry">
                     <h2 class="entryTitle"> {{ post.title }} </h2>
@@ -41,4 +32,5 @@
             </a>
         {% endif %}
     {% endfor %}
+    </div>
 {% endblock %}

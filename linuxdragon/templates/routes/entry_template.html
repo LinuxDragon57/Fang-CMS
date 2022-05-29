@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'routes/routes.html' %}
 
 {% block metaInformation %}
     <meta name="description" content="{{ post_data.description }}">
@@ -6,20 +6,13 @@
 
 {%  block title %} {{ post_data.title }} {% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='entry_template.css') }}">
-{% endblock %}
-
-{% block navMenuItems %}
+{%  block heading %}
     <h1 id="titleBar"> {{ post_data.title }} </h1>
     <h2 class="postTitle"> Written by {{ post_data.author.full_name }} </h2>
 {% endblock %}
 
-{%  block heading %}
-    <h3 id="description"> {{ post_data.description }} </h3>
-{% endblock %}
-
 {% block content %}
+    <h3 id="description"> {{ post_data.description }} </h3>
     <h4 id="postedDate"> {{ post_data.format_date }} </h4>
     {{ post_content | safe }}
     <figcaption>Copyright &copy; {{ post_data.author.full_name }} &mdash; All Rights Reserved</figcaption>

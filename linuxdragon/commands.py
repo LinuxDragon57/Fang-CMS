@@ -1,15 +1,15 @@
 import os
 import sys
 import click
-import re
-from secrets import compare_digest
-from flask.cli import with_appcontext
-from getpass import getpass
-from werkzeug.security import generate_password_hash
-from flask import current_app
+import pyotp
 
-from linuxdragon.Models import db, Author
-from linuxdragon.security import configure_totp
+from flask.cli import with_appcontext
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask import current_app
+from segno import make as create_qrcode
+
+from linuxdragon.Models import db, Author, TOTPSecret
+from linuxdragon.security import encrypt, change_password, scrub_input_data
 
 
 # Function allows the user to initialize the database with a simple Flask command.
@@ -20,41 +20,47 @@ def initialize_database():
     db.create_all()
 
 
-def create_author(is_admin: bool):
-    # Prompt the user to create a new username
-    username = input('Enter new username: ')
-    while True:  # Exit-controlled loop that exits when the user is able to successfully enter the same password twice.
-        password = getpass(prompt='Enter a password for the new user: ', stream=None)
-        repeated_password = getpass(prompt='Repeat the password:', stream=None)
-        # Use secrets.compare_digest to ensure that the user was able to enter the same password twice.
-        if not compare_digest(password, repeated_password):
-            print('Error: Passwords do not match. Please try again.', file=sys.stderr)
-        else:
-            break
+@click.command()
+@click.password_option()
+def cli_login(password: str):
+    for count in range(0, 2):  # An exit-controlled loop.
+        # Get the user's username and password, then query the database for a row matching the username.
+        username = click.prompt("Username: ")
+        password = password
+        current_user: Author = Author.query.filter_by(username=username).one_or_none()
 
-    # Prompt for the new user's full name.
-    first_name = input("Enter author's first name: ")
-    last_name = input("Enter author's last name: ")
+        # If the database returns a Null value - meaning that a user with the specified username does not exist,
+        # then notify the user. Else if the password entered by the user is incorrect, notify the user. Else if
+        # the maximum tries for authentication has been reached, raise a StopIteration error and exit the program.
+        # Else exit the loop and return the collected variable values.
+        if not current_user:
+            click.echo("Error: No matching username was found in the database. Please try again.", file=sys.stderr)
+        elif not check_password_hash(current_user.passwd_hash, password):
+            click.echo("Error: Incorrect password. Please try again.", file=sys.stderr)
+        elif count == 2:
+            raise StopIteration("Error: Failed to authenticate after three tries. Exiting now.")
+        else:
+            return current_user, password
+
+
+@click.command('create-author')
+@click.option('--username', prompt=True)
+@click.password_option()
+@click.option('--admin', is_flag=True)
+@with_appcontext
+def create_author(username: str, password: str, admin: bool):
+    # Prompt for the new user's username, password, and full name.
+    first_name = click.prompt("Enter author's first name ", type=str)
+    last_name = click.prompt("Enter author's last name ", type=str)
     error = None
 
-    auth_criteria = re.compile(r'^\S{8,50}$')  # Match a string of 8 to 50 whitespace-free characters.
-    name_criteria = re.compile(r'^[a-z A-Z.]{1,26}$')  # Match strings up to 26 letters, periods, or spaces.
-    # Using python's regex library, scrub the data to ensure it doesn't break the database and ensure it makes sense.
-    input_check = [
-        auth_criteria.match(username),
-        auth_criteria.match(password),
-        name_criteria.match(first_name),
-        name_criteria.match(last_name)
-    ]
-
-    # If anything fails the regex check, set the error variable to the following verbose string.
-    for criterion in input_check:
-        if criterion is None:
-            error = \
-                """
+    if scrub_input_data(username, password, first_name, last_name):
+        error = \
+            """
                 Invalid arguments or missing requirements:
-                    ~ Whitespace isn't allowed.
-                    ~ The password and username must be at least 8 characters long.
+                    ~ Whitespace isn't allowed in password and username fields.
+                    ~ The username must be at least 8 characters long.
+                    ~ The password field must be at least 32 characters long.
                     ~ Name fields can only contain letters.
                     ~ Empty strings aren't allowed.
                 """
@@ -69,39 +75,37 @@ def create_author(is_admin: bool):
                     passwd_hash=generate_password_hash(password),
                     first_name=first_name,
                     last_name=last_name,
-                    admin=is_admin
+                    admin=admin
                 )
                 db.session.add(user)
                 db.session.commit()
-                if is_admin is True:
-                    print(f"Successfully added {username} as an Admin.")
-                elif is_admin is False:
-                    print(f"Successfully added {username}.")
+                if admin:
+                    click.echo(f"Successfully added {username} as an Admin.")
+                elif not admin:
+                    click.echo(f"Successfully added {username}.")
 
-                totp_prompt = input("Would you like to set up TOTP? Y/n (Default: Y): ")
-                if totp_prompt.lower() != 'n':
-                    configure_totp(user)
-            else:
-                raise ValueError('DBIntegrityError: ')
+                totp_prompt = click.confirm("Would you like to set up TOTP? ")
+                if totp_prompt:
+                    configure_totp(user, password)
         except ValueError as err:
             error = f"{err} {username} is already registered."
 
     if error:
-        print(error)
+        click.echo(error, file=sys.stderr)
 
 
-# Function allows the user to create an administrator account with a Flask command.
-@click.command('create-admin')
+@click.command('modify-author')
+@click.option('--modification-choice', type=click.Choice(['username', 'password'], case_sensitive=False))
 @with_appcontext
-def create_admin():
-    create_author(True)
+def modify_author(modification_choice):
+    current_user, password = cli_login()
+    if modification_choice == 'username':
+        current_user.username = click.prompt("Enter new username: ")
+    elif modification_choice == 'password':
+        change_password(password, password, current_user)
 
-
-# Function allows the user to create an unprivileged account with a Flask command.
-@click.command('create-user')
-@with_appcontext
-def create_user():
-    create_author(False)
+    db.session.commit()
+    click.echo(f"Successfully updated {current_user.full_name}'s settings.")
 
 
 # A function that allows the user to set up TOTP directly with a Flask command.
@@ -122,12 +126,20 @@ def initialize_data_directories():
     if not os.path.isdir(f"{current_app.config['DATA_DIRECTORY']}/entries"):
         os.mkdir(f"{current_app.config['DATA_DIRECTORY']}/entries")
 
+    # Same thing for the "authors" directories.
+    if not os.path.isdir(f"{current_app.config['DATA_DIRECTORY']}/authors"):
+        os.mkdir(f"{current_app.config['DATA_DIRECTORY']}/authors")
+
     # Iterate through the available "GENRES" defined in the TOML file
     # and create directories for them if they do not exist
     for genre in current_app.config['GENRES']:
         genre_path = f"{current_app.config['DATA_DIRECTORY']}/entries/{mkpath(genre)}"
         if not os.path.isdir(genre_path):
             os.mkdir(genre_path)
+
+    for author in Author.query.all():
+        if not os.path.isdir(f"{current_app.config['DATA_DIRECTORY']}/authors/{author.username}"):
+            os.mkdir(f"{current_app.config['DATA_DIRECTORY']}/authors/{author.username}")
 
     # Notify the user of success at completion of the function.
     print(f"\nSuccessfully created the paths at {current_app.config['DATA_DIRECTORY']}/entries:")
@@ -140,3 +152,48 @@ def mkpath(s: str):
         return s.replace(' ', '_').lower()
     else:
         return "NULL"
+
+
+def configure_totp(current_user: Author = None, password=None):
+    # If no parameter is passed in, prompt for login credentials to retrieve the appropriate row in the Author database.
+    if current_user is None:
+        # If a parameter has been passed into the function, only prompt the user for their password.
+        current_user, password = cli_login()
+    elif current_user and not password:
+        raise (TypeError("Unhandled Exception: Password cannot be a NoneType object."))
+
+    # Generate the secret seed for RFC 6238 2FA authentication
+    shared_secret = pyotp.random_base32()
+    totp = pyotp.TOTP(shared_secret)
+
+    # Create the provisioning URI that will be used to generate a QR code.
+    provisioning_uri = pyotp.totp.TOTP(shared_secret).provisioning_uri(
+        name=current_user.username,
+        issuer_name=current_app.config['APP_URI']
+    )
+
+    # Use the provisioning_uri to generate the qrcode and render it to the terminal for the user to scan it with their
+    # TOTP-based Application. Also print out the TOTP seed for manual configuration if desired.
+    qrcode = create_qrcode(provisioning_uri)
+    click.echo("Scan this qrcode with your authenticator app.")
+    qrcode.terminal(compact=True)
+    click.echo(f"Or you can use the shared secret: {shared_secret}.")
+    # Prompt the user for their generated OTP code and verify it matches the server.
+    current_otp = input("Enter the 6-digit code supplied by your authenticator app: ")
+    for count in range(0, 2):  # Exit-controlled loop
+        # If able to verify the OTP code, encrypt the shared secret and store it in the database.
+        if password is not None and totp.verify(current_otp):
+            click.echo("Successfully added TOTP to your account.")
+            encrypted_secret: TOTPSecret = encrypt(shared_secret, password)
+            del shared_secret  # Delete the unencrypted form of the shared_secret as soon as it is encrypted.
+            encrypted_secret.author_id = current_user.id
+            svg_path = f"{current_app.config['DATA_DIRECTORY']}/authors/{current_user.username}.totp_qrcode.svg"
+            qrcode.save(svg_path)
+            db.session.add(encrypted_secret)
+            db.session.commit()
+            break
+        # If the password is never initialized to a non-null value, throw an exception. Should never happen though...
+        elif password is None:
+            raise (TypeError("Unhandled Exception: Password cannot be a NoneType object."))
+        elif count == 2:
+            click.echo("Unable to verify TOTP method. Exiting now.", file=sys.stderr)

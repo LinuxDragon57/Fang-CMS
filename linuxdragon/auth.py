@@ -1,15 +1,14 @@
 import functools
 import pyotp
-from secrets import compare_digest
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for, make_response, abort, current_app
 )
 
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 from itsdangerous import Signer
 
-from linuxdragon.Models import db, Author
+from linuxdragon.Models import Author
 from linuxdragon.security import decrypt
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth/')
@@ -26,7 +25,7 @@ def login():
         password = request.form.get('password')
         error = None
 
-        user = Author.query.filter_by(username=username).one_or_none()
+        user: Author = Author.query.filter_by(username=username).one_or_none()
 
         if not user:
             error = "Username does not match any users in the database."
@@ -123,40 +122,6 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
-
-
-# Allow the user to change their password or username.
-@auth_bp.route('/account_settings', methods=("GET", "POST"))
-@login_required
-def account_settings():
-    if request.method == "POST":
-        if request.form.get('cancel') == 'Cancel':
-            return redirect(url_for('cms.index'))
-        elif request.form.get('update') == 'Update':
-            current_user = Author.query.get(session.get('user_id'))
-            username = request.form.get('username')
-            new_password = request.form.get('newPassword')
-            repeat_password = request.form.get('repeatPassword')
-            password = request.form.get('password')
-            error = None
-
-            if not check_password_hash(current_user.passwd_hash, password):
-                error = "Incorrect Password."
-
-            if not compare_digest(new_password, repeat_password):
-                error = "New passwords do not match."
-
-            if error is None:
-                if len(username) > 1:
-                    current_user.username = username
-                if len(new_password) > 1 and len(repeat_password) > 1:
-                    current_user.passwd_hash = generate_password_hash(new_password)
-                db.session.commit()
-                flash(f"Successfully updated your user settings, {current_user.username}")
-
-            flash(error)
-
-    return render_template('auth/user_settings.html')
 
 
 @auth_bp.context_processor

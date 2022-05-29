@@ -8,6 +8,15 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='cms.css') }}">
 {% endblock %}
 
+{% block navMenuItems %}
+    <ul id="navMenu">
+        <li id="navItem"><a id="navBtn" href="{{ url_for('cms.create') }}">Write New Post</a></li>
+        <li id="navItem"><a id="navBtn" href="{{ url_for('cms.read') }}">View Current Posts</a></li>
+        <li id="navItem"><a id="navBtn" href="{{ url_for('cms.update') }}">Edit an Existing Post</a></li>
+        <li id="navItem"><a id="navBtn" href="{{ url_for('cms.delete') }}">Delete an Existing Post</a></li>
+    </ul>
+{% endblock %}
+
 {% block title %}
     LinuxDragon CMS - {% block subTitle %}{% endblock %}
 {% endblock %}

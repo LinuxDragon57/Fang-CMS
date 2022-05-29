@@ -18,6 +18,7 @@ html {
   --text-color: #EBEBEB;
   --text-accent-color: #7E7D83;
   --heading-color: #4EA5D9;
+  --heading-accent-color: #e7BBe3;
   --error-color: #E85F5C;
 }
 
@@ -268,16 +269,36 @@ main {
   justify-content: center;
 }
 
+fieldset, legend {
+  color: var(--text-color);
+}
+
+input, textarea{
+  background-color: var(--text-color);
+}
+
+div.postsList {
+  border: var(--text-accent-color) solid 0.25px;
+  border-radius: 10px;
+}
+
 a.postLink, div.listEntry {
+  border-bottom: var(--text-accent-color) solid 0.5px;
+  border-radius: 10px;
+  width: 80vw;
+  text-decoration: none;
+  text-align: center;
+  &:hover {
 
+  }
 }
 
-h2#entryTitle {
-
+h2.entryTitle {
+  color: var(--heading-accent-color);
 }
 
-h3#entryDescription {
-
+h3.entryDescription {
+  color: var(--nav-color);
 }
 
 a.btnLink {
@@ -294,7 +315,6 @@ button#cancelBtn {
 }
 
 button#submitBtn {
-
 }
 
 div#flashedMessage {
@@ -312,13 +332,22 @@ div#flashedMessage {
   & h4 {
     color: var(--secondary-bg-color);
     font-family: "Oxanium ExtraBold", sans-serif;
+    font-size: x-large;
     font-weight: 900;
+    padding: 0 3rem;
   }
   & button#closeMsg {
     background-color: transparent;
     color: var(--secondary-bg-color);
+    margin: 0 1em 0 auto;
     width: 3rem;
     border: solid 0.5px transparent;
     cursor: pointer;
+    &:hover {
+      border-radius: 10px;
+      border: solid 0.5px var(--secondary-bg-color);
+      padding: 0.25rem;
+      box-shadow: 3px 3px 3px black;
+    }
   }
 }

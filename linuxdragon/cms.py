@@ -4,6 +4,7 @@ from flask import (
 from mistune import html as create_html
 from os import (remove as remove_file, rename as rename_file)
 
+# noinspection PyInterpreter
 from linuxdragon.commands import mkpath
 from linuxdragon.auth import login_required
 from linuxdragon.Models import db, Author, Entry
@@ -29,7 +30,8 @@ def create():
             post_title = request.form.get('title')
             post_desc = request.form.get('description')
             post_genre = request.form.get('genre')
-            content_path = f"{current_app.config['DATA_DIRECTORY']}/{mkpath(post_genre)}/{mkpath(post_title)}.md"
+            content_path = \
+                f"{current_app.config['DATA_DIRECTORY']}/entries/{mkpath(post_genre)}/{mkpath(post_title)}.md"
             author_id = session.get('user_id')
             error = None
 
@@ -112,8 +114,8 @@ def update():
 
                     if error is None:
                         if update_post.title != post_title or update_post.genre != post_genre:
-                            content_path = \
-                                f"{current_app.config['DATA_DIRECTORY']}/{mkpath(post_genre)}/{mkpath(post_title)}.md"
+                            content_path = f"{current_app.config['DATA_DIRECTORY']}/entries/" \
+                                           f"{mkpath(post_genre)}/{mkpath(post_title)}.md"
                             rename_file(update_post.content_path, content_path)
                         else:
                             content_path = update_post.content_path

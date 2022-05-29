@@ -12,14 +12,20 @@ setup(
     zip_safe=False,
     license="AGPL",
     install_requires=[
-        'flask',
-        'flask-sqlalchemy',
+        'Flask',
+        'Flask-SQLAlchemy',
+        'itsdangerous',
+        'Jinja2',
+        'MarkupSafe',
         'mistune==2.0.0rc1',
         'toml',
-        'python-dotenv',
-        'segno',
+        'psycopg2',
+        'pycryptodomex',
         'pyotp',
+        'python-dotenv',
         'pywarp',
-        'pycryptodomex'
+        'segno',
+        'sqlalchemy',
+        'werkzeug'
     ],
 )

@@ -4,3 +4,19 @@
 a#logo, img#logo {
     display: none;
 }
+
+main {
+    margin: 0;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+form, fieldset {
+    width: 1000px;
+    margin: 5rem auto;
+}
+
+textarea {
+    height: 580px;
+}
