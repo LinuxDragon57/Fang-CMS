@@ -9,8 +9,8 @@ from flask import current_app
 from segno import make as create_qrcode
 from sqlalchemy.exc import ProgrammingError
 
-from linuxdragon.Models import db, Author, TOTPSecret
-from linuxdragon.security import encrypt, change_password, scrub_input_data
+from Fang.Models import db, Author, TOTPSecret
+from Fang.security import encrypt, change_password, scrub_input_data
 
 
 # Function allows the user to initialize the database with a simple Flask command.
@@ -22,6 +22,7 @@ def initialize_database():
     click.echo("Database Initialized!")
 
 
+# Function allows the user to expunge the database with a single Flask command.
 @click.command('expunge-db')
 @with_appcontext
 def expunge_database():

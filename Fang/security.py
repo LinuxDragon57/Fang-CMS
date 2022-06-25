@@ -5,7 +5,7 @@ from Cryptodome.Cipher import AES
 from Cryptodome.Random import get_random_bytes
 from werkzeug.security import generate_password_hash
 
-from linuxdragon.Models import db, TOTPSecret, Author
+from Fang.Models import db, TOTPSecret, Author
 
 
 def encrypt(plain_text: str, passwd: str) -> TOTPSecret:

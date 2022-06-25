@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/linuxdragon_cms.iml" filepath="$PROJECT_DIR$/.idea/linuxdragon_cms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Fang-CMS.iml" filepath="$PROJECT_DIR$/.idea/Fang-CMS.iml" />
     </modules>
   </component>
 </project>

@@ -8,8 +8,8 @@ from flask import (
 from werkzeug.security import check_password_hash
 from itsdangerous import Signer
 
-from linuxdragon.Models import Author
-from linuxdragon.security import decrypt
+from Fang.Models import Author
+from Fang.security import decrypt
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth/')
 

@@ -2,14 +2,15 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/linuxdragon" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/testing" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/unit_tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Fang" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/data" />
       <excludeFolder url="file://$MODULE_DIR$/instance" />
-      <excludeFolder url="file://$MODULE_DIR$/linuxdragon/old_templates" />
       <excludeFolder url="file://$MODULE_DIR$/LinuxDragon_CMS.egg-info" />
+      <excludeFolder url="file://$MODULE_DIR$/Fang/old_templates" />
+      <excludeFolder url="file://$MODULE_DIR$/Fang/static/images" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -21,7 +22,7 @@
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/linuxdragon/templates" />
+        <option value="$MODULE_DIR$/Fang/templates" />
       </list>
     </option>
   </component>

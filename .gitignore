@@ -150,3 +150,6 @@ dmypy.json
 
 # Ignore user-generated SVG files
 /data/*.svg
+
+# Ignore project images
+/static/images/

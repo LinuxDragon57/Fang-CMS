@@ -3,7 +3,7 @@ from flask import (
 )
 from mistune import html as create_html
 
-from linuxdragon.Models import Entry
+from Fang.Models import Entry
 
 routes_bp = Blueprint('routes', __name__, url_prefix='/')
 

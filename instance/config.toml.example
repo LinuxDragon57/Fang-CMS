@@ -1,6 +1,7 @@
 SQLALCHEMY_DATABASE_URI = "sqlite:////<path>/<to>/<data>/<dir>/<file.sqlite3>"
+SQLALCHEMY_DATABASE_URI = "postgresql://username:password@localhost:5432/dev"
 SQLALCHEMY_TRACK_MODIFICATIONS = "False"
-APP_URI = "http://localhost:5000"
+APP_URL = ['localhost']
 DATA_DIRECTORY = "/<path>/<to>/<data>/<dir>" # Do not leave a trailing slash here.
 GENRES = [
     "Realistic Fiction",

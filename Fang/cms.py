@@ -5,10 +5,10 @@ from sqlalchemy.exc import IntegrityError
 from mistune import html as create_html
 from os import (remove as remove_file, rename as rename_file)
 
-from linuxdragon.commands import mkpath
-from linuxdragon.auth import login_required
-from linuxdragon.Models import db, Author, Entry
-from linuxdragon.security import scrub_post_data
+from Fang.commands import mkpath
+from Fang.auth import login_required
+from Fang.Models import db, Author, Entry
+from Fang.security import scrub_post_data
 
 
 cms_bp = Blueprint('cms', __name__, url_prefix='/cms/')
