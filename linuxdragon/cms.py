@@ -118,7 +118,7 @@ def update():
                     post_desc = request.form.get('description')
                     post_genre = request.form.get('genres')
 
-                    if not scrub_post_data(post_title, post_desc, ):
+                    if not scrub_post_data(post_title, post_desc, request.form.get('entry')):
                         if update_post.title != post_title or update_post.genre != post_genre:
                             content_path = f"{current_app.config['DATA_DIRECTORY']}/entries/" \
                                            f"{mkpath(post_genre)}/{mkpath(post_title)}.md"

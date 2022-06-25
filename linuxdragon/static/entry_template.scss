@@ -1,1 +1,20 @@
 @use 'base';
+
+main {
+  flex-flow: column wrap;
+  align-items: center;
+}
+#description {
+  font-size: 1.57rem;
+  font-style: italic;
+  font-family: "Oxanium Light", sans-serif;
+  line-height: 2;
+  margin-bottom: 3rem;
+}
+
+#Date {
+  font-size: 1.2rem;
+  text-align: right;
+  width: 50rem;
+  font-family: "Oxanium Light", sans-serif;
+}

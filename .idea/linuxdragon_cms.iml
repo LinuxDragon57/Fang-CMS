@@ -15,6 +15,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="oxanium" level="application" />
     <orderEntry type="library" name="oxanium" level="application" />
+    <orderEntry type="library" name="oxanium" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />

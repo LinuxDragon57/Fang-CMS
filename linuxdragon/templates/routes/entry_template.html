@@ -8,12 +8,17 @@
 
 {%  block heading %}
     <h1 id="titleBar"> {{ post_data.title }} </h1>
-    <h2 class="postTitle"> Written by {{ post_data.author.full_name }} </h2>
+    <h2 id="postTitle"> Written by {{ post_data.author.full_name }}</h2>
 {% endblock %}
 
 {% block content %}
     <h3 id="description"> {{ post_data.description }} </h3>
-    <h4 id="postedDate"> {{ post_data.format_date }} </h4>
+    {% if post_content.created_on != post_content.updated_on %}
+        <h4 id="Date">Last updated on {{ post_content.updated_on }}</h4>
+        <h5 id="Date">Originally created on {{ post_content.created_on }}</h5>
+    {% else %}
+        <h4 id="Date">{{ post_data.created_on }}</h4>
+    {% endif %}
     {{ post_content | safe }}
     <figcaption>Copyright &copy; {{ post_data.author.full_name }} &mdash; All Rights Reserved</figcaption>
 {% endblock %}

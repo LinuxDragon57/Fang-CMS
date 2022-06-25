@@ -1,5 +1,3 @@
-#!./venv/bin/python
-
 from secrets import token_urlsafe
 import toml
 from flask import Flask
