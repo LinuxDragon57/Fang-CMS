@@ -7,6 +7,7 @@ from flask.cli import with_appcontext
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import current_app
 from segno import make as create_qrcode
+from sqlalchemy.exc import ProgrammingError
 
 from linuxdragon.Models import db, Author, TOTPSecret
 from linuxdragon.security import encrypt, change_password, scrub_input_data
@@ -18,6 +19,17 @@ from linuxdragon.security import encrypt, change_password, scrub_input_data
 @with_appcontext
 def initialize_database():
     db.create_all()
+    click.echo("Database Initialized!")
+
+
+@click.command('expunge-db')
+@with_appcontext
+def expunge_database():
+    if click.confirm("Are you sure you want to clear the database of all tables?"):
+        db.drop_all()
+        click.echo("Database Expunged.")
+    else:
+        click.echo("Aborted")
 
 
 @click.command()
@@ -54,7 +66,7 @@ def create_author(username: str, password: str, admin: bool):
     last_name = click.prompt("Enter author's last name ", type=str)
     error = None
 
-    if scrub_input_data(username, password, first_name, last_name):
+    if not scrub_input_data(username, password, first_name, last_name):
         error = \
             """
                 Invalid arguments or missing requirements:
@@ -84,8 +96,7 @@ def create_author(username: str, password: str, admin: bool):
                 elif not admin:
                     click.echo(f"Successfully added {username}.")
 
-                totp_prompt = click.confirm("Would you like to set up TOTP? ")
-                if totp_prompt:
+                if click.confirm("Would you like to set up TOTP?"):
                     configure_totp(user, password)
         except ValueError as err:
             error = f"{err} {username} is already registered."
@@ -130,6 +141,10 @@ def initialize_data_directories():
     if not os.path.isdir(f"{current_app.config['DATA_DIRECTORY']}/authors"):
         os.mkdir(f"{current_app.config['DATA_DIRECTORY']}/authors")
 
+    # Create a directory to store application logs - Errors in particular
+    if not os.path.isdir(f"{current_app.config['DATA_DIRECTORY']}/logs"):
+        os.mkdir(f"{current_app.config['DATA_DIRECTORY']}/logs")
+
     # Iterate through the available "GENRES" defined in the TOML file
     # and create directories for them if they do not exist
     for genre in current_app.config['GENRES']:
@@ -137,9 +152,20 @@ def initialize_data_directories():
         if not os.path.isdir(genre_path):
             os.mkdir(genre_path)
 
-    for author in Author.query.all():
-        if not os.path.isdir(f"{current_app.config['DATA_DIRECTORY']}/authors/{author.username}"):
-            os.mkdir(f"{current_app.config['DATA_DIRECTORY']}/authors/{author.username}")
+    # If the database wasn't initialized beforehand, initialize the database and then try again.
+    for iteration in range(0, 1):
+        try:
+            for author in Author.query.all():
+                if not os.path.isdir(f"{current_app.config['DATA_DIRECTORY']}/authors/{author.username}"):
+                    os.mkdir(f"{current_app.config['DATA_DIRECTORY']}/authors/{author.username}")
+                else:
+                    click.echo(f"Directory for user, {author}, has already been created.")
+            break
+        except ProgrammingError:
+            click.echo("Unable to access the Author table. Did you initialize the database first?", file=sys.stderr)
+            click.echo("Attempting to initialize database...")
+            db.create_all()
+            click.echo("Database Initialized!")
 
     # Notify the user of success at completion of the function.
     print(f"\nSuccessfully created the paths at {current_app.config['DATA_DIRECTORY']}/entries:")

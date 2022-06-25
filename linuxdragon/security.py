@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash
 from linuxdragon.Models import db, TOTPSecret, Author
 
 
-def encrypt(plain_text: str, passwd: str):
+def encrypt(plain_text: str, passwd: str) -> TOTPSecret:
     # generate a random salt
     salt = get_random_bytes(AES.block_size)
 
@@ -31,7 +31,7 @@ def encrypt(plain_text: str, passwd: str):
     )
 
 
-def decrypt(encrypted_secret: TOTPSecret, passwd: str):
+def decrypt(encrypted_secret: TOTPSecret, passwd: str) -> str:
     # decode the TOTPSecret entries from base64
     salt = b64decode(encrypted_secret.salt)
     cipher_text = b64decode(encrypted_secret.cipher_text)
@@ -47,7 +47,7 @@ def decrypt(encrypted_secret: TOTPSecret, passwd: str):
     cipher = AES.new(private_key, AES.MODE_GCM, nonce=nonce)
 
     # decrypt the cipher text
-    return cipher.decrypt_and_verify(cipher_text, tag)
+    return str(cipher.decrypt_and_verify(cipher_text, tag))
 
 
 def change_password(old_password: str, new_password: str, current_user: Author):
@@ -61,8 +61,8 @@ def change_password(old_password: str, new_password: str, current_user: Author):
         db.session.add(encrypted_secret)
 
 
-def scrub_input_data(username: str, password: str, first_name: str, last_name:str):
-    error: bool = False
+def scrub_input_data(username: str, password: str, first_name: str, last_name: str) -> bool:
+    success: bool = True
     username_criteria = re.compile(r'^\S{8,64}$')  # Match a string of 8 to 64 whitespace-free characters.
     password_criteria = re.compile(r'^\S{32,256}$')  # Match a string of 32 to 256 whitespace-free characters.
     name_criteria = re.compile(r'^[a-z A-Z.]{1,32}$')  # Match a string of up to 26 letters, periods, or spaces.
@@ -75,8 +75,28 @@ def scrub_input_data(username: str, password: str, first_name: str, last_name:st
         name_criteria.match(last_name)
     ]
 
-    # If anything fails the regex check, set the error boolean value to true.
+    # If anything fails the regex check, set the success boolean value to False.
     if not any(input_check):
-        error = True
+        success = False
 
-    return error
+    return success
+
+
+def scrub_post_data(title: str, description: str, content: str) -> bool:
+    success: bool = True
+    title_criteria = re.compile(r'^[\w ]{3,25}$')  # Match a string of 3 to 25 letters and spaces.
+    description_criteria = re.compile(r'^[\w ]{25,100}$')  # Match a string of 25 to 100 characters or spaces.
+    content_criteria = re.compile(r'^[\s\w]{100,}$')  # Match a string of at least 100 characters (whitespaces allowed).
+
+    # Using Python's regex library, scrub the data to ensure it doesn't break the database.
+    input_check = [
+        title_criteria.match(title),
+        description_criteria.match(description),
+        content_criteria.match(content)
+    ]
+
+    # If anything fails the regex check, set the success boolean value to False.
+    if not any(input_check):
+        success = False
+
+    return success

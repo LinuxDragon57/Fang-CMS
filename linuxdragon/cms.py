@@ -1,13 +1,14 @@
 from flask import (
     Blueprint, request, render_template, flash, current_app, session, redirect, url_for, Markup, abort
 )
+from sqlalchemy.exc import IntegrityError
 from mistune import html as create_html
 from os import (remove as remove_file, rename as rename_file)
 
-# noinspection PyInterpreter
 from linuxdragon.commands import mkpath
 from linuxdragon.auth import login_required
 from linuxdragon.Models import db, Author, Entry
+from linuxdragon.security import scrub_post_data
 
 
 cms_bp = Blueprint('cms', __name__, url_prefix='/cms/')
@@ -23,48 +24,49 @@ def index():
 @cms_bp.route('/create', methods=("GET", "POST"))
 @login_required
 def create():
+    post_info = {
+        'title': "",
+        'description': "",
+        'genre': "",
+        'content': ""
+    }
     if request.method == "POST":
         if request.form.get('cancel') == 'Cancel':
             return redirect(url_for('cms.index'))
         elif request.form.get('create') == 'Create Post':
-            post_title = request.form.get('title')
-            post_desc = request.form.get('description')
-            post_genre = request.form.get('genre')
-            content_path = \
-                f"{current_app.config['DATA_DIRECTORY']}/entries/{mkpath(post_genre)}/{mkpath(post_title)}.md"
+            post_info['title'] = request.form.get('title')
+            post_info['description'] = request.form.get('description')
+            post_info['genre'] = request.form.get('genre')
+            post_info['content'] = request.form.get('entry')
+            content_path = f"{current_app.config['DATA_DIRECTORY']}/entries/" \
+                           f"{mkpath(post_info['genre'])}/{mkpath(post_info['title'])}.md "
             author_id = session.get('user_id')
-            error = None
 
-            if len(post_title) <= 1 or len(post_desc) <= 1:
-                error = "A Title and Description are required."
-
-            if len(request.form['entry']) < 100:
-                error = "Your post content must have least 100 characters."
-
-            if error is None:
+            if not scrub_post_data(post_info['title'], post_info['description'], post_info['content']):
+                flash("Your input has not met the acceptable criteria for a post.")
+            else:
                 try:
                     markdown_file = open(content_path, 'x')
-                    markdown_file.write(request.form['entry'])
-                    markdown_file.close()
-                except OSError:
-                    error = "Error: A post with that title already exists."
-
-                if error is None:
                     new_entry = Entry(
-                        title=post_title,
-                        description=post_desc,
-                        genre=post_genre,
-                        content_path=content_path,
-                        author_id=author_id
+                            title=post_info['title'],
+                            description=post_info['description'],
+                            genre=post_info['genre'],
+                            content_path=content_path,
+                            author_id=author_id
                     )
                     db.session.add(new_entry)
                     db.session.commit()
-                    flash(Markup(f"Successfully created post, <em>{post_title}</em>."))
+                    markdown_file.write(post_info['content'])
+                    markdown_file.close()
+                    flash(Markup(f"Successfully created post, <em>{post_info['title']}</em>."))
                     return redirect(url_for('cms.index'))
+                except OSError or IntegrityError:
+                    if OSError:
+                        flash("Error: A post with that title already exists.")
+                    else:
+                        flash("Unknown Error: Could not preserve database integrity. No post was created.")
 
-            flash(error)
-
-    return render_template('cms/create_post.html')
+    return render_template('cms/create_post.html', post_info=post_info)
 
 
 @cms_bp.route('/read')
@@ -85,34 +87,38 @@ def read():
 @cms_bp.route('/update', methods=('POST', 'GET'))
 @login_required
 def update():
+
+    # Sometimes a post_id variable will be passed in as a query parameter. Initialize it here using the Flask request
+    # API - setting it to None if no query parameter is passed in.
     post_id = request.args.get('post_id', None, int)
+
+    # If the request method of the page is a GET request...
     if request.method == "GET":
+        # If the client sends a GET request without supplying a post_id query parameter,
+        # present a list of posts that the current logged-in user can edit.
         if post_id is None:
             current_user_posts = Entry.query.filter_by(author_id=session.get('user_id')).all()
             return render_template('cms/cms_landing.html', posts=current_user_posts, update=True)
         elif post_id is not None:
+            # Else if the client sends a GET request and supplies a post_id query parameter,
+            # 
             edit_post = Entry.query.filter_by(id=post_id).first_or_404()
             content = open(edit_post.content_path, 'r').read()
             return render_template('cms/update_post.html', post_data=edit_post, post_content=content)
+    # If the request method of the page is a POST request...
     elif request.method == "POST":
-        if request.form.get('cancel') == 'Cancel':
+        if request.form.get('cancel') == 'Cancel':  # The cancel button was pressed. Nothing was done.
             return redirect(url_for('cms.index'))
-        elif request.form.get('update') == 'Update Post':
-            if post_id is not None:
+        elif request.form.get('update') == 'Update Post':  # The submit button was pressed.
+            if post_id is not None:  # Ensure that the backend has been given a post to work with.
+                # Use the supplied post_id to query the database for the rest of the post's metadata.
                 update_post = Entry.query.filter_by(id=post_id).first_or_404()
                 if update_post.author_id == session.get('user_id'):
                     post_title = request.form.get('title')
                     post_desc = request.form.get('description')
                     post_genre = request.form.get('genres')
-                    error = None
 
-                    if len(post_title) <= 1 or len(post_desc) <= 1:
-                        error = "A Title and Description are required."
-
-                    if len(request.form['entry']) < 100:
-                        error = "Your post must have at least 100 characters."
-
-                    if error is None:
+                    if not scrub_post_data(post_title, post_desc, ):
                         if update_post.title != post_title or update_post.genre != post_genre:
                             content_path = f"{current_app.config['DATA_DIRECTORY']}/entries/" \
                                            f"{mkpath(post_genre)}/{mkpath(post_title)}.md"

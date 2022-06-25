@@ -34,6 +34,7 @@ class Entry(db.Model):
     genre = db.Column(db.String(25), nullable=False)
     content_path = db.Column(db.Text(), nullable=False)
     date_created = db.Column(db.Date(), default=date.today())
+    last_update = db.Column(db.Date(), onupdate=date.today())
     author_id = db.Column(db.SmallInteger, db.ForeignKey('author.id'))
 
     def __repr__(self):
@@ -56,12 +57,20 @@ class Entry(db.Model):
         return func.lower(func.replace(self.title, ' ', '_'))
 
     @hybrid_property
-    def format_date(self):
+    def created_on(self):
         return self.date_created.strftime("%A, %d %B %Y")
 
-    @format_date.expression
-    def format_date(self):
+    @created_on.expression
+    def created_on(self):
         return func.strftime(self.date_created, "%A, %d %B %Y")
+
+    @hybrid_property
+    def updated_on(self):
+        return self.last_update.strftime("%A, %d %B %Y")
+
+    @updated_on.expression
+    def updated_on(self):
+        return func.strftime(self.last_update, "%A, %d %B %Y")
 
 
 # Table is a one-to-one relationship, and stores the encryption information for each author's TOTP Seed.

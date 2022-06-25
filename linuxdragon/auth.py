@@ -70,7 +70,7 @@ def verify_auth():
             if request.method == "POST":
                 password = request.form.get('password')
                 totp_code = request.form.get('totp_code')
-                shared_secret = decrypt(user.totp_secret, password)
+                shared_secret = str(decrypt(user.totp_secret, password))
                 totp = pyotp.TOTP(shared_secret)
                 del shared_secret  # Remove the shared_secret from memory as soon as we are done with it.
                 if totp.verify(totp_code):

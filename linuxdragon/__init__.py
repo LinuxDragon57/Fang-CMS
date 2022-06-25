@@ -5,7 +5,7 @@ import toml
 from flask import Flask
 from linuxdragon.Models import db
 from linuxdragon.commands import (
-    initialize_database, create_author, initialize_data_directories, mkpath, set_up_totp, modify_author
+    initialize_database, expunge_database, create_author, initialize_data_directories, mkpath, set_up_totp, modify_author
 )
 from linuxdragon.auth import auth_bp
 from linuxdragon.cms import cms_bp
@@ -21,6 +21,7 @@ def create_app():
 
     db.init_app(app)
     app.cli.add_command(initialize_database)
+    app.cli.add_command(expunge_database)
     app.cli.add_command(create_author)
     app.cli.add_command(initialize_data_directories)
     app.cli.add_command(set_up_totp)
