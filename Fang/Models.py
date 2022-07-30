@@ -28,7 +28,7 @@ class Author(db.Model):
 
 # Table is a one-to-many relationship, and stores Metadata for each Author's entries.
 class Entry(db.Model):
-    id = db.Column(db.CHAR(16), primary_key=True, default=token_urlsafe(12))
+    id = db.Column(db.CHAR(16), primary_key=True, default=token_urlsafe)
     title = db.Column(db.String(25), nullable=False)
     description = db.Column(db.Text(), nullable=False)
     genre = db.Column(db.String(25), nullable=False)

@@ -81,7 +81,8 @@ button:not(#menuBtn) {
   margin: 0;
   width: 5rem;
   height: auto;
-  border-radius: 10px;
+  border: none;
+  outline: none;
 }
 
 a:link {
@@ -236,28 +237,26 @@ footer {
   margin: 3rem 0 0;
 }
 
-a#softwareLicense, a#loginBtn, a#logoutBtn {
+a#loginLink, a#logoutLink {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: transparent;
   color: var(--accent-color);
-  text-decoration: none;
-  font-family: "Oxanium SemiBold", sans-serif;
-}
+  font-size: x-large;
+  font-family: "Oxanium Bold", sans-serif;
+  line-height: 1;
+  padding: 0 0.5rem;
+  margin: 0.25rem;
+  border: solid 4px transparent;
+  &:hover, &:focus {
+    background-color: var(--accent-color);
+    color: var(--secondary-bg-color);
+    }
 
-a#loginBtn, a#logoutBtn {
-  border: 1px solid var(--accent-color);
-  padding: 5px;
-  border-radius: 10%;
-}
-
-a#loginBtn:hover, a#logoutBtn:hover {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
-  color: var(--bg-accent-color);
-  box-shadow: 0 5px #3B636B;
-}
-
-a#loginBtn:active, a#logoutBtn:active {
-  box-shadow: 0 3px #263943;
-  transform: translateY(6px);
+  a#softwareLicense {
+    text-decoration: none;
+  }
 }
 
 main {
@@ -278,14 +277,13 @@ input, textarea{
   background-color: var(--text-color);
 }
 
-div.postsList {
-  border: var(--text-accent-color) solid 0.25px;
-  border-radius: 10px;
+article.postsList {
+  border: var(--heading-color) solid 0.1px;
+  background-color: var(--secondary-bg-color);
 }
 
 a.postLink, div.listEntry {
-  border-bottom: var(--text-accent-color) solid 0.5px;
-  border-radius: 10px;
+  border-bottom: var(--heading-color) solid 0.2px;
   width: 80vw;
   text-decoration: none;
   text-align: center;
@@ -299,23 +297,7 @@ h2.entryTitle {
 }
 
 h3.entryDescription {
-  color: var(--nav-color);
-}
-
-a.btnLink {
-
-}
-
-div#actionBtns {
-
-}
-
-button#cancelBtn {
-  color: var(--secondary-bg-color);
-  background-color: var(--error-color);
-}
-
-button#submitBtn {
+  color: var(--accent-color);
 }
 
 div#flashedMessage {
@@ -338,17 +320,11 @@ div#flashedMessage {
     padding: 0 3rem;
   }
   & button#closeMsg {
-    background-color: transparent;
-    color: var(--secondary-bg-color);
+    color: black;
     margin: 0 1em 0 auto;
     width: 3rem;
-    border: solid 0.5px transparent;
+    border: solid 0.5px black;
     cursor: pointer;
-    &:hover {
-      border-radius: 10px;
-      border: solid 0.5px var(--secondary-bg-color);
-      padding: 0.25rem;
-      box-shadow: 3px 3px 3px black;
-    }
+    padding: 0.25rem;
   }
 }

@@ -3,25 +3,34 @@
 {%  block subTitle %} Delete {{ post_data.title }}{% endblock %}
 
 {% block navMenuItems %}
-    <h1 id="titleBar"> <strong>Delete</strong> {{ post_data.title }} </h1>
-    <h2 class="postTitle"> Written by {{ post_data.author.full_name }} </h2>
-        <h4>Are you sure you want to delete this post?</h4>
-    <div id="actionBtns">
-        <a href="{{ url_for('cms.index') }}">
-            <button type="submit" formmethod="get" id="submitBtn">No, Do Not Delete this Post</button>
-        </a>
-        <a href="{{ url_for('cms.index') }}">
-            <button id="cancelBtn">Yes, Delete this Post</button>
-        </a>
-    </div>
+    <style>
+        header, nav {
+            display: none;
+        }
+    </style>
 {% endblock %}
 
 {%  block heading %}
-    <h3 id="description">{{ post_data.description }}</h3>
+    <h1 id="titleBar"> {{ post_data.title }} </h1>
+    <h2 id="postTitle"> Written by {{ post_data.author.full_name }}</h2>
 {% endblock %}
 
 {% block content %}
-    <h4 id="postedDate">{{ post_data.format_date }}</h4>
+    <h3 id="description"> {{ post_data.description }} </h3>
+    {% if post_content.created_on != post_content.updated_on %}
+        <h4 id="Date">Last updated on {{ post_content.updated_on }}</h4>
+        <h5 id="Date">Originally created on {{ post_content.created_on }}</h5>
+    {% else %}
+        <h4 id="Date">{{ post_data.created_on }}</h4>
+    {% endif %}
     {{ post_content | safe }}
     <figcaption>Copyright &copy; {{ post_data.author.full_name }} &mdash; All Rights Reserved</figcaption>
+    <div id="actionBtns">
+        <a class="btnLink" href="{{ url_for('cms.index') }}">
+            <button type="submit" formmethod="get" id="submitBtn">Do Not Delete this Post</button>
+        </a>
+        <a class="btnLink" href="{{ url_for('cms.delete', post_id=post_data.id) }}">
+            <button type="submit" formmethod="post" id="cancelBtn">Delete this Post</button>
+        </a>
+    </div>
 {% endblock %}

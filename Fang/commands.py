@@ -131,9 +131,12 @@ def set_up_totp():
 @with_appcontext
 def initialize_data_directories():
     # If the "DATA_DIRECTORY" specified in the TOML file doesn't exist, create it.
-    if not os.path.isdir(current_app.config['DATA_DIRECTORY']):
-        os.mkdir(current_app.config['DATA_DIRECTORY'])
-
+    try:
+        if not os.path.isdir(current_app.config['DATA_DIRECTORY']):
+            os.mkdir(current_app.config['DATA_DIRECTORY'])
+    except FileNotFoundError:
+        click.echo(f"{current_app.config['DATA_DIRECTORY']}: No such file or directory", file=sys.stderr)
+        sys.exit(1)
     # If the "entries" directory doesn't exist, create it.
     if not os.path.isdir(f"{current_app.config['DATA_DIRECTORY']}/entries"):
         os.mkdir(f"{current_app.config['DATA_DIRECTORY']}/entries")

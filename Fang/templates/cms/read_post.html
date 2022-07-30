@@ -14,12 +14,13 @@
     <figcaption>Copyright &copy; {{ post_data.author.full_name }} &mdash; All Rights Reserved</figcaption>
     <div id="actionBtns">
         <a class="btnLink" href="{{ url_for('cms.update', post_id=post_data.id) }}">
-            <button type="submit" formmethod="get" id="submitBtn">Update this Post</button></a>
+            <button type="submit" formmethod="get" id="submitBtn">Update this Post</button>
+        </a>
         <a class="btnLink" href="{{ url_for('cms.delete', post_id=post_data.id) }}">
-            <button type="submit" formmethod="get">Delete this Post</button>
+            <button type="submit" formmethod="get" id="submitBtn">Delete this Post</button>
         </a>
         <a class="btnLink" href="{{ url_for('cms.index') }}" id="cancelBtn">
-            <button type="submit" formmethod="get">Return Home</button>
+            <button type="submit" formmethod="get" id="cancelBtn">Return Home</button>
         </a>
     </div>
 {% endblock %}

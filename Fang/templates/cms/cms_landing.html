@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="postsList">
+    <article class="postsList">
     {% for post in posts %}
         {%  if update %}
             <a class="postLink" href="{{ url_for('cms.update', post_id=post.id) }}">
@@ -32,5 +32,5 @@
             </a>
         {% endif %}
     {% endfor %}
-    </div>
+    </article>
 {% endblock %}

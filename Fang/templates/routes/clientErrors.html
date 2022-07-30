@@ -1,0 +1,29 @@
+{% extends 'routes/routes.html' %}
+
+{% block metaInformation %}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block title %}
+    Error <span id="httpResponse">400</span>: <span id="httpCode">Bad Request</span>
+{% endblock %}
+
+{% block heading %}
+    <h1>Error <span id="httpResponse">400</span></h1>
+    <h2><span id="httpCode">Bad Request</span></h2>
+{% endblock %}
+
+{% block content %}
+    <h3>
+    <span id="errorMsg">
+        Your request generated an internal server error. Either you have JavaScript disabled,
+        or the page wasn't able to determine the specific error.
+    </span>
+    </h3>
+    <a class="btnLink" href="{{ url_for('routes.index') }}">
+        <button type="submit" formmethod="get" id="cancelBtn">Return Home</button>
+    </a>
+{% endblock %}
+
+{% block dynamicFooter %}
+{% endblock %}

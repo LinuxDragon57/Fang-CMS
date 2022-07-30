@@ -20,3 +20,50 @@ form, fieldset {
 textarea {
     height: 580px;
 }
+
+a.btnLink {
+    text-decoration: none;
+}
+
+@mixin button-styles {
+    color: var(--text-color);
+    font-family: "Oxanium Light", sans-serif;
+    font-size: 1.25rem;
+}
+
+div#actionBtns {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+    gap: 1.25rem;
+}
+
+input#submitForm {
+    @include button-styles;
+    cursor: pointer;
+}
+
+input#cancelForm {
+    @include button-styles;
+    cursor: pointer;
+    background-color: var(--error-color);
+    border-color: var(--nf-error-border-color);
+}
+
+button#submitBtn, button#cancelBtn {
+    @include button-styles;
+    width: 100%;
+    height: max-content;
+    border-radius: 0;
+    margin: 0.25rem;
+}
+
+button#submitBtn {
+    background-color: var(--nf-main-color);
+}
+
+button#cancelBtn {
+    background-color: var(--error-color);
+}

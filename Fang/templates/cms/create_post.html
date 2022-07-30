@@ -37,8 +37,10 @@
             </select>
             <label for="entry">Entry</label>
             <textarea name="entry" id="entry" rows="10" cols="10" required>{{ post_info['content'] }}</textarea>
-            <input type="submit" name="create" value="Create Post">
-            <input type="submit" name="cancel" value="Cancel">
+            <input id="submitForm" type="submit" name="create" value="Create Post">
+            <a class="btnLink" href="{{ url_for('cms.index') }}">
+                <input id="cancelForm" type="button" name="cancel" value="Cancel">
+            </a>
         </fieldset>
     </form>
     {% with messages = get_flashed_messages() %}

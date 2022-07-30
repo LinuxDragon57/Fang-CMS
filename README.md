@@ -47,6 +47,13 @@ markdown compatible content is stored in the filesystem. The application uses th
 same name within the DATA_DIRECTORY. Subsequently, markdown files are stored in the directory corresponding to their 
 genre categorization.
 
+### Initial Setup of the Application:
+1) Set configuration variables in `config.toml`
+2) Initialize the database by running `$flask init-db`
+3) Create the data directories by running `$flask mkdatadirs`
+4) Create an author that can log in by running `$flask create-author --admin`. Omit the admin flag to create an 
+unprivileged account.
+
 ### Rules for Manual Deployment using Gunicorn + Nginx
 More information will be given after I deploy it to my server for the first time.
 

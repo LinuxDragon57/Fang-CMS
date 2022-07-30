@@ -11,8 +11,9 @@
       <excludeFolder url="file://$MODULE_DIR$/LinuxDragon_CMS.egg-info" />
       <excludeFolder url="file://$MODULE_DIR$/Fang/old_templates" />
       <excludeFolder url="file://$MODULE_DIR$/Fang/static/images" />
+      <excludeFolder url="file://$MODULE_DIR$/Fang/static/images" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (fang-cms)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="oxanium" level="application" />
     <orderEntry type="library" name="oxanium" level="application" />

@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="postsList">
+    <article class="postsList">
     {% for post in posts %}
         <a class="postLink" href="{{ url_for('routes.show_post', genre=post.genre_url, post_title=post.title_url) }}">
             <div class="listEntry">
@@ -20,9 +20,5 @@
             </div>
         </a>
     {% endfor %}
-    </div>
-{% endblock %}
-
-{% block dynamicFooter %}
-    <a id="loginBtn" href="{{ url_for('auth.login') }}">CMS Login</a>
+    </article>
 {% endblock %}
