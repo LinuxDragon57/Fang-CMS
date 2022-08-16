@@ -74,15 +74,45 @@ p, ul, ol {
   width: 50rem;
 }
 
-button:not(#menuBtn) {
-  font-size: 1.8rem;
-  font-family: "Oxanium ExtraBold", sans-serif;
-  padding: 0.25rem;
-  margin: 0;
-  width: 5rem;
-  height: auto;
+button {
+  cursor: pointer;
   border: none;
   outline: none;
+  width: 5rem;
+  height: auto;
+  background-color: transparent;
+  &:not(#menuBtn) {
+    font-size: 1.8rem;
+    overflow: hidden;
+    font-family: "Oxanium Bold", sans-serif;
+    color: var(--text-color);
+    padding: 0.25rem 0.5rem;
+    margin: 0.25rem;
+    transition: 0.2s;
+    &:hover {
+      &::before {
+        width: 100%;
+      }
+      &:active {
+        background-color: rgba(255,255,255,0.1);
+      }
+    }
+  }
+}
+
+span.ripple {
+  background-color: rgba(0,190,255,.7);
+  border-radius: 50%;
+  position: absolute;
+  transform: scale(0);
+  animation: ripple .5s linear forwards;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
 }
 
 a:link {
@@ -101,7 +131,7 @@ img {
   display: inline-block;
 }
 
-div#layout {
+div#layoutContainer {
   min-height: calc(100vh - 50px);
   position: relative;
   left: 0;
@@ -241,8 +271,8 @@ a#loginLink, a#logoutLink {
   display: block;
   width: 100%;
   height: auto;
-  background: transparent;
   color: var(--accent-color);
+  text-decoration: none;
   font-size: x-large;
   font-family: "Oxanium Bold", sans-serif;
   line-height: 1;
@@ -323,8 +353,10 @@ div#flashedMessage {
     color: black;
     margin: 0 1em 0 auto;
     width: 3rem;
-    border: solid 0.5px black;
     cursor: pointer;
     padding: 0.25rem;
+    &:hover {
+      
+    }
   }
 }

@@ -8,7 +8,6 @@ from Fang.commands import (
 from Fang.auth import auth_bp
 from Fang.cms import cms_bp
 from Fang.routes import routes_bp
-from Fang.errors import *
 
 
 # Flask Application factory
@@ -30,17 +29,6 @@ def create_app():
     app.register_blueprint(routes_bp)
     app.register_blueprint(cms_bp)
     app.add_template_global(mkpath, 'mkpath')
-
-    app.register_error_handler(400, bad_request)
-    app.register_error_handler(401, unauthorized)
-    app.register_error_handler(403, forbidden)
-    app.register_error_handler(404, page_not_found)
-    app.register_error_handler(405, method_not_allowed)
-    app.register_error_handler(408, request_timeout)
-    app.register_error_handler(500, internal_server_error)
-    app.register_error_handler(502, bad_gateway)
-    app.register_error_handler(503, service_unavailable)
-    app.register_error_handler(504, gateway_timeout)
 
     @app.before_request
     def prohibit_untrusted_domain():
