@@ -62,7 +62,7 @@ db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:
-instance/*.toml
+instance/config.toml
 .webassets-cache
 
 # Scrapy stuff:
@@ -153,3 +153,6 @@ dmypy.json
 
 # Ignore project images
 /static/images/
+
+# Ignore sqlite database files used in testing
+*.db

@@ -34,12 +34,11 @@ def expunge_database():
 
 
 @click.command()
+@click.option('--username', prompt=True)
 @click.password_option()
-def cli_login(password: str):
+def cli_login(username, password: str):
     for count in range(0, 2):  # An exit-controlled loop.
         # Get the user's username and password, then query the database for a row matching the username.
-        username = click.prompt("Username: ")
-        password = password
         current_user: Author = Author.query.filter_by(username=username).one_or_none()
 
         # If the database returns a Null value - meaning that a user with the specified username does not exist,
@@ -48,8 +47,10 @@ def cli_login(password: str):
         # Else exit the loop and return the collected variable values.
         if not current_user:
             click.echo("Error: No matching username was found in the database. Please try again.", file=sys.stderr)
+            continue  # Unnecessary, but makes the program more readable
         elif not check_password_hash(current_user.passwd_hash, password):
             click.echo("Error: Incorrect password. Please try again.", file=sys.stderr)
+            continue  # Unnecessary, but makes the program more readable
         elif count == 2:
             raise StopIteration("Error: Failed to authenticate after three tries. Exiting now.")
         else:
@@ -121,10 +122,25 @@ def modify_author(modification_choice):
 
 
 # A function that allows the user to set up TOTP directly with a Flask command.
-@click.command('configure-totp')
+@click.command('reset-totp')
 @with_appcontext
-def set_up_totp():
-    configure_totp()
+def reset_totp():
+    # There is a known bug wherein this function causes click to throw an error...
+    # Error: Got unexpected extra argument (reset-totp)
+    # I can't find the bug so that I can remove it.
+    current_user, password = cli_login()
+    if current_user.totp_secret is not None:
+        click.echo("You are about to erase your current TOTP Secret.")
+        click.echo("Any previously configured TOTP credentials will no longer be able to be used for authentication.")
+        if click.confirm("Are you sure you want to proceed? This action cannot be undone."):
+            svg_path = f"{current_app.config['DATA_DIRECTORY']}/authors/{current_user.username}.totp_qrcode.svg"
+            os.remove(svg_path)
+            db.session.delete(current_user.totp_secret)
+            db.session.commit()
+        else:
+            click.echo("Aborted")
+            sys.exit(0)
+    configure_totp(current_user, password)
 
 
 @click.command('mkdatadirs')
@@ -181,25 +197,20 @@ def mkpath(s: str):
     if s:
         return s.replace(' ', '_').lower()
     else:
+        # If the string is a NoneType Object, prevent breakage by converting that to a string.
+        # Such behavior is not ideal and the function should never receive a string with a null value.
         return "NULL"
 
 
-def configure_totp(current_user: Author = None, password=None):
-    # If no parameter is passed in, prompt for login credentials to retrieve the appropriate row in the Author database.
-    if current_user is None:
-        # If a parameter has been passed into the function, only prompt the user for their password.
-        current_user, password = cli_login()
-    elif current_user and not password:
-        raise (TypeError("Unhandled Exception: Password cannot be a NoneType object."))
-
+def configure_totp(current_user: Author, password: str):
     # Generate the secret seed for RFC 6238 2FA authentication
     shared_secret = pyotp.random_base32()
-    totp = pyotp.TOTP(shared_secret)
+    totp = pyotp.TOTP(shared_secret, issuer=current_app.config['APP_URLS'][0])
 
     # Create the provisioning URI that will be used to generate a QR code.
     provisioning_uri = pyotp.totp.TOTP(shared_secret).provisioning_uri(
         name=current_user.username,
-        issuer_name=current_app.config['APP_URI']
+        issuer_name="Fang-CMS"
     )
 
     # Use the provisioning_uri to generate the qrcode and render it to the terminal for the user to scan it with their

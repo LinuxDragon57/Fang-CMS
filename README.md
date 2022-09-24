@@ -58,11 +58,13 @@ unprivileged account.
 More information will be given after I deploy it to my server for the first time.
 
 ## Code and Releases:
-This project's code tries to largely follow Functional design patterns. The main exception is the implementation of the 
-Flask-SQLAlchemy API which uses an Object-Oriented approach. Furthermore, emphasis is placed on statically typing as 
-many Python variables as possible. The frontend uses TypeScript instead of JavaScript, and frontend programming languages
-are only used when necessary for dynamic UI elements. Everything else is written in the Jinja2 Templating language 
-(which is just a language embedded within HTML to allow Python usage in HTML) and SCSS. This project also uses 
-[Normform](https://normform.netlify.app/) for styling forms. The only change that has been made is converting the CSS 
-file to a Sass Module. The same has also been done for [Normalize.css](https://necolas.github.io/normalize.css/).
+This project's code tries to largely follow Functional design patterns - though admittedly, I am not as familiar with
+Functional Programming; nor is Python a Functional Language. The main exception is the implementation of the 
+Flask-SQLAlchemy API which uses an Object-Oriented approach, and some functions do not handle state in a Functional way. 
+I do hope to get this in-line with Functional design patterns as time progresses. Most variables in this program enforce
+static typing as well, and it tries to follow PEP 8 guidelines. The frontend uses TypeScript instead of JavaScript, 
+and frontend code is only used when necessary for dynamic UI elements. Everything else is written in the Jinja2 
+Templating language and SCSS. This project also uses [Normform](https://normform.netlify.app/) for styling forms. 
+The only change that has been made is converting the CSS file to a Sass Module. The same has also been done for 
+[Normalize.css](https://necolas.github.io/normalize.css/).
 

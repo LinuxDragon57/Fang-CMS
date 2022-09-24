@@ -18,6 +18,7 @@
     <orderEntry type="library" name="oxanium" level="application" />
     <orderEntry type="library" name="oxanium" level="application" />
     <orderEntry type="library" name="oxanium" level="application" />
+    <orderEntry type="library" name="ckeditor" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />

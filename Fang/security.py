@@ -63,14 +63,13 @@ def change_password(old_password: str, new_password: str, current_user: Author):
 
 def scrub_input_data(username: str, password: str, first_name: str, last_name: str) -> bool:
     success: bool = True
-    username_criteria = re.compile(r'^\S{8,64}$')  # Match a string of 8 to 64 whitespace-free characters.
-    password_criteria = re.compile(r'^\S{32,256}$')  # Match a string of 32 to 256 whitespace-free characters.
+    auth_criteria = re.compile(r'^\S{8,64}$')  # Match a string of 8 to 64 whitespace-free characters.
     name_criteria = re.compile(r'^[a-z A-Z.]{1,32}$')  # Match a string of up to 26 letters, periods, or spaces.
 
     # Using Python's regex library, scrub the data to ensure it doesn't break the database.
     input_check = [
-        username_criteria.match(username),
-        password_criteria.match(password),
+        auth_criteria.match(username),
+        auth_criteria.match(password),
         name_criteria.match(first_name),
         name_criteria.match(last_name)
     ]

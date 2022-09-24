@@ -34,7 +34,7 @@ def login():
             session.clear()
             abort(401)
 
-        if not error:
+        if not error and user.totp_secret is not None:
             session.clear()
             signature = get_app_signature()
             response = make_response(redirect(url_for('auth.verify_auth')))
@@ -44,9 +44,12 @@ def login():
                 path=url_for('auth.verify_auth'),
                 max_age=90,
                 secure=True,
-                httponly=True
+                httponly=True,
+                samesite='Lax',
             )
             return response
+        elif not error and user.totp_secret is None:
+            return add_logged_in_user(user)
 
         flash(error)
 
@@ -70,9 +73,9 @@ def verify_auth():
             if request.method == "POST":
                 password = request.form.get('password')
                 totp_code = request.form.get('totp_code')
-                shared_secret = str(decrypt(user.totp_secret, password))
+                shared_secret = decrypt(user.totp_secret, password)
                 totp = pyotp.TOTP(shared_secret)
-                del shared_secret  # Remove the shared_secret from memory as soon as we are done with it.
+                del shared_secret  # Discard Python's allocation of shared_secret because we are done with it.
                 if totp.verify(totp_code):
                     return add_logged_in_user(user)
                 else:
