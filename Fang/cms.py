@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from mistune import html as create_html
 from os import remove as remove_file, rename as rename_file
 
-from Fang.commands import mkpath
+from Fang.commands import make_path
 from Fang.auth import login_required
 from Fang.Models import db, Author, Entry
 from Fang.security import scrub_post_data
@@ -41,7 +41,7 @@ def create():
             post_info['genre'] = request.form.get('genre')
             post_info['content'] = request.form.get('entry')
             content_path = f"{current_app.config['DATA_DIRECTORY']}/entries/" \
-                           f"{mkpath(post_info['genre'])}/{mkpath(post_info['title'])}.md"
+                           f"{make_path(post_info['genre'])}/{make_path(post_info['title'])}.md"
 
             if not scrub_post_data(post_info['title'], post_info['description'], post_info['content']):
                 flash("Your input has not met the acceptable criteria for a post.")
@@ -115,7 +115,7 @@ def update():
                     if not scrub_post_data(post_title, post_desc, request.form.get('entry')):
                         if update_post.title != post_title or update_post.genre != post_genre:
                             content_path = f"{current_app.config['DATA_DIRECTORY']}/entries/" \
-                                           f"{mkpath(post_genre)}/{mkpath(post_title)}.md"
+                                           f"{make_path(post_genre)}/{make_path(post_title)}.md"
                             rename_file(update_post.content_path, content_path)
                         else:
                             content_path = update_post.content_path

@@ -47,7 +47,7 @@ def decrypt(encrypted_secret: TOTPSecret, passwd: str) -> str:
     cipher = AES.new(private_key, AES.MODE_GCM, nonce=nonce)
 
     # decrypt the cipher text
-    return str(cipher.decrypt_and_verify(cipher_text, tag))
+    return cipher.decrypt_and_verify(cipher_text, tag).decode('utf-8')
 
 
 def change_password(old_password: str, new_password: str, current_user: Author):

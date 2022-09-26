@@ -4,6 +4,7 @@ from flask import (
 from mistune import html as create_html
 
 from Fang.Models import Entry
+from Fang.commands import unmake_path
 
 routes_bp = Blueprint('routes', __name__, url_prefix='/')
 
@@ -16,6 +17,7 @@ def index():
 
 @routes_bp.route('/genres/<genre>')
 def genres(genre):
+    genre = unmake_path(genre)
     relevant_posts = Entry.query.filter_by(genre=genre).all()
     return render_template('routes/index.html', posts=relevant_posts)
 

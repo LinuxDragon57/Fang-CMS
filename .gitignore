@@ -156,3 +156,6 @@ dmypy.json
 
 # Ignore sqlite database files used in testing
 *.db
+
+# Ignore the .idea directory
+.idea/

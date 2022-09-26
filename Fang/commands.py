@@ -21,6 +21,8 @@ def initialize_database():
     db.create_all()
     click.echo("Database Initialized!")
 
+    return 0
+
 
 # Function allows the user to expunge the database with a single Flask command.
 @click.command('expunge-db')
@@ -32,29 +34,29 @@ def expunge_database():
     else:
         click.echo("Aborted")
 
+    return 0
 
-@click.command()
-@click.option('--username', prompt=True)
-@click.password_option()
-def cli_login(username, password: str):
-    for count in range(0, 2):  # An exit-controlled loop.
-        # Get the user's username and password, then query the database for a row matching the username.
-        current_user: Author = Author.query.filter_by(username=username).one_or_none()
 
-        # If the database returns a Null value - meaning that a user with the specified username does not exist,
-        # then notify the user. Else if the password entered by the user is incorrect, notify the user. Else if
-        # the maximum tries for authentication has been reached, raise a StopIteration error and exit the program.
-        # Else exit the loop and return the collected variable values.
-        if not current_user:
-            click.echo("Error: No matching username was found in the database. Please try again.", file=sys.stderr)
-            continue  # Unnecessary, but makes the program more readable
-        elif not check_password_hash(current_user.passwd_hash, password):
-            click.echo("Error: Incorrect password. Please try again.", file=sys.stderr)
-            continue  # Unnecessary, but makes the program more readable
-        elif count == 2:
-            raise StopIteration("Error: Failed to authenticate after three tries. Exiting now.")
-        else:
-            return current_user, password
+def cli_login(iteration: int = 1):
+    error: bool = False
+    username = click.prompt('Username ')
+    password = click.prompt('Password ', hide_input=True)
+    cli_user: Author = Author.query.filter_by(username=username).one_or_none()
+
+    if not cli_user:
+        click.echo("Username does not match any users in the database.", file=sys.stderr)
+        error = True
+    elif not check_password_hash(cli_user.passwd_hash, password):
+        click.echo("Failed to authenticate your password.", file=sys.stderr)
+        error = True
+
+    if error and iteration <= 3:
+        return cli_login(iteration=iteration+1)
+    elif not error:
+        return cli_user, password
+    else:
+        click.echo("Maximum number of tries exceeded. Exiting now...", file=sys.stderr)
+        sys.exit(1)
 
 
 @click.command('create-author')
@@ -106,6 +108,23 @@ def create_author(username: str, password: str, admin: bool):
     if error:
         click.echo(error, file=sys.stderr)
 
+    return 0
+
+
+@click.command('delete-author')
+@with_appcontext
+def delete_author():
+    current_user, password = cli_login()
+    if click.confirm(f"Are you sure you want to delete the author: {current_user.full_name}? "):
+        if current_user.totp_secret:
+            os.remove(f"{current_app.config['DATA_DIRECTORY']}/authors/{current_user.username}.totp_qrcode.svg")
+            db.session.delete(current_user.totp_secret)
+        db.session.delete(current_user)
+        db.session.commit()
+        click.echo(f"Successfully deleted Author {current_user.full_name}.")
+
+        return 0
+
 
 @click.command('modify-author')
 @click.option('--modification-choice', type=click.Choice(['username', 'password'], case_sensitive=False))
@@ -119,6 +138,8 @@ def modify_author(modification_choice):
 
     db.session.commit()
     click.echo(f"Successfully updated {current_user.full_name}'s settings.")
+
+    return 0
 
 
 # A function that allows the user to set up TOTP directly with a Flask command.
@@ -141,6 +162,8 @@ def reset_totp():
             click.echo("Aborted")
             sys.exit(0)
     configure_totp(current_user, password)
+
+    return 0
 
 
 @click.command('mkdatadirs')
@@ -168,7 +191,7 @@ def initialize_data_directories():
     # Iterate through the available "GENRES" defined in the TOML file
     # and create directories for them if they do not exist
     for genre in current_app.config['GENRES']:
-        genre_path = f"{current_app.config['DATA_DIRECTORY']}/entries/{mkpath(genre)}"
+        genre_path = f"{current_app.config['DATA_DIRECTORY']}/entries/{make_path(genre)}"
         if not os.path.isdir(genre_path):
             os.mkdir(genre_path)
 
@@ -191,9 +214,11 @@ def initialize_data_directories():
     print(f"\nSuccessfully created the paths at {current_app.config['DATA_DIRECTORY']}/entries:")
     print(*os.listdir(f"{current_app.config['DATA_DIRECTORY']}/entries"), sep='\n')
 
+    return 0
+
 
 # Data is stored in human-readable format, but URLs and paths do not need spaces and uppercase letters.
-def mkpath(s: str):
+def make_path(s: str):
     if s:
         return s.replace(' ', '_').lower()
     else:
@@ -202,9 +227,16 @@ def mkpath(s: str):
         return "NULL"
 
 
+def unmake_path(s: str):
+    if s:
+        return s.replace('_', ' ').title()
+    else:
+        return "NULL"
+
+
 def configure_totp(current_user: Author, password: str):
     # Generate the secret seed for RFC 6238 2FA authentication
-    shared_secret = pyotp.random_base32()
+    shared_secret: str = pyotp.random_base32()
     totp = pyotp.TOTP(shared_secret, issuer=current_app.config['APP_URLS'][0])
 
     # Create the provisioning URI that will be used to generate a QR code.
@@ -238,3 +270,5 @@ def configure_totp(current_user: Author, password: str):
             raise (TypeError("Unhandled Exception: Password cannot be a NoneType object."))
         elif count == 2:
             click.echo("Unable to verify TOTP method. Exiting now.", file=sys.stderr)
+
+        return 0
