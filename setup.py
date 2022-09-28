@@ -2,9 +2,9 @@ from setuptools import find_packages, setup
 
 setup(
     name='Fang-CMS',
-    version='0.0.1',
+    version='1.0.3',
     description="A Blog CMS written in Flask.",
-    author="E. L. Jackson",
+    author="Tyler Gautney",
     author_email="linuxdragon57@codedragon.dev",
     url="https://github.com/LinuxDragon57/Fang-CMS",
     packages=find_packages(),
