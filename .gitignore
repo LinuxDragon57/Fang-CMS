@@ -103,8 +103,8 @@ celerybeat.pid
 
 # Environments
 .env
-.flaskenv
-.venv
+.venv/
+virtualenv/
 env/
 venv/
 ENV/
