@@ -15,6 +15,7 @@ setup(
         'click',
         'Flask',
         'Flask-SQLAlchemy',
+        'gunicorn',
         'itsdangerous',
         'Jinja2',
         'MarkupSafe',

@@ -14,6 +14,8 @@
             <input name="username" id="username" pattern="^\S{8,64}" title="Enter a username that is 8 to 64 characters long without any whitespace." autofocus required>
             <label for="password">Password</label>
             <input type="password" name="password" id="password" pattern="^\S{8, 64}$" title="Enter a password that is 8 to 64 characters long without any whitespaces." required>
+            <label for="totp_code">2FA Token (Optional)</label>
+            <input name="totp_code" id="totp_code">
             <input type="submit" value="Log In">
         </fieldset>
     </form>

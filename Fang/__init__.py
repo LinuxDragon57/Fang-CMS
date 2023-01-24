@@ -4,7 +4,7 @@ from flask import Flask, request, abort
 from Fang.Models import db
 from Fang.commands import (
     initialize_database, expunge_database, create_author, modify_author, delete_author, initialize_data_directories,
-    make_path, reset_totp,
+    make_path, reset_totp, test_totp
 )
 from Fang.auth import auth_bp
 from Fang.cms import cms_bp
@@ -33,6 +33,7 @@ def create_app():
     app.cli.add_command(reset_totp)
     app.cli.add_command(modify_author)
     app.cli.add_command(delete_author)
+    app.cli.add_command(test_totp)
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(routes_bp)

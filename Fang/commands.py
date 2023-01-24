@@ -10,7 +10,7 @@ from segno import make as create_qrcode
 from sqlalchemy.exc import ProgrammingError
 
 from Fang.Models import db, Author, TOTPSecret
-from Fang.security import encrypt, change_password, scrub_input_data
+from Fang.security import decrypt, encrypt, change_password, scrub_input_data
 
 
 # Function allows the user to initialize the database with a simple Flask command.
@@ -39,8 +39,8 @@ def expunge_database():
 
 def cli_login(iteration: int = 1):
     error: bool = False
-    username = click.prompt('Username ')
-    password = click.prompt('Password ', hide_input=True)
+    username = click.prompt('Username')
+    password = click.prompt('Password', hide_input=True)
     cli_user: Author = Author.query.filter_by(username=username).one_or_none()
 
     if not cli_user:
@@ -66,8 +66,8 @@ def cli_login(iteration: int = 1):
 @with_appcontext
 def create_author(username: str, password: str, admin: bool):
     # Prompt for the new user's username, password, and full name.
-    first_name = click.prompt("Enter author's first name ", type=str)
-    last_name = click.prompt("Enter author's last name ", type=str)
+    first_name = click.prompt("Enter author's first name", type=str)
+    last_name = click.prompt("Enter author's last name", type=str)
     error = None
 
     if not scrub_input_data(username, password, first_name, last_name):
@@ -164,6 +164,22 @@ def reset_totp():
     configure_totp(current_user, password)
 
     return 0
+
+
+@click.command('test-totp')
+@with_appcontext
+def test_totp():
+    current_user, password = cli_login()
+    totp_code = click.prompt("Enter 6-digit authentication code", type=str)
+    shared_secret = decrypt(current_user.totp_secret, password)
+    totp = pyotp.TOTP(shared_secret)
+    del shared_secret
+    click.echo('\n' + ('-'*15))
+    if totp.verify(totp_code):
+        click.echo("VERIFIED")
+    else:
+        click.echo("DENIED")
+    click.echo(('-'*15) + '\n')
 
 
 @click.command('mkdatadirs')
