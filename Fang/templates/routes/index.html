@@ -11,14 +11,18 @@
 {% endblock %}
 
 {% block content %}
-    <article class="postsList">
-    {% for post in posts %}
-        <a class="postLink" href="{{ url_for('routes.show_post', genre=post.genre_url, post_title=post.title_url) }}">
-            <div class="listEntry">
-                <h2 class="entryTitle"> {{ post.title }} </h2>
-                <h3 class="entryDescription"> {{ post.description }}</h3>
-            </div>
-        </a>
-    {% endfor %}
-    </article>
+    {% if not posts %}
+        <style> main { visibility: hidden; } </style>
+    {% else %}
+        <article class="postsList">
+        {% for post in posts %}
+            <a class="postLink" href="{{ url_for('routes.show_post', genre=post.genre_url, post_title=post.title_url) }}">
+                <div class="listEntry">
+                    <h2 class="entryTitle"> {{ post.title }} </h2>
+                    <h3 class="entryDescription"> {{ post.description }}</h3>
+                </div>
+            </a>
+        {% endfor %}
+        </article>
+    {% endif %}
 {% endblock %}

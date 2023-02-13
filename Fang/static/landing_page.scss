@@ -1,1 +1,29 @@
 @use 'base';
+
+div#page-title {
+  order: 2;
+}
+
+@media screen and (max-width: 600px) and (orientation: portrait), screen and (max-width: 800px) and (orientation: landscape) {
+
+  @include base.normalize-responsive-design();
+
+  div#page-title {
+    order: 3;
+  }
+
+  button#menuBtn {
+    margin: 5px;
+  }
+
+  img#logo, a#logo {
+    order: 2;
+    margin: 0;
+  }
+
+  nav#sideNav.activated {
+    width: 100vw;
+    border: none;
+  }
+
+}

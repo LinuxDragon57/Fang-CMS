@@ -147,11 +147,11 @@ dmypy.json
 # Ignore user-generated SVG files
 /data/*.svg
 
-# Ignore project images
-/static/images/
-
 # Ignore sqlite database files used in testing
 *.db
 
 # Ignore the .idea directory
 .idea/
+
+# Ignore the logo image
+!/Fang/static/images/logo.svg

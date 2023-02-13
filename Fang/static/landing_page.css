@@ -455,8 +455,8 @@ header {
 }
 
 img#logo, a#logo {
-  justify-self: flex-end;
   height: 128px;
+  order: 3;
   margin: 0 0 10px auto;
 }
 
@@ -657,6 +657,65 @@ div#flashedMessage button#closeMsg {
 }
 figcaption {
   font-family: "Oxanium ExtraLight", sans-serif;
+}
+
+div#page-title {
+  order: 2;
+}
+
+@media screen and (max-width: 600px) and (orientation: portrait), screen and (max-width: 800px) and (orientation: landscape) {
+  h1 {
+    font-size: 3rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  h4 {
+    font-size: 1rem;
+  }
+  h5 {
+    font-size: 0.65rem;
+    line-height: 1.25;
+    padding: 0.25rem;
+  }
+  p, ul, ol {
+    text-align: left;
+    font-size: 1rem;
+    margin: 0.5em 2em;
+    line-height: 1.25;
+    width: 90%;
+  }
+  ul {
+    row-gap: 0.75em;
+  }
+  header {
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  footer {
+    text-align: center;
+    height: 55px;
+    padding: 0.25em;
+    gap: 0;
+  }
+  div#page-title {
+    order: 3;
+  }
+  button#menuBtn {
+    margin: 5px;
+  }
+  img#logo, a#logo {
+    order: 2;
+    margin: 0;
+  }
+  nav#sideNav.activated {
+    width: 100vw;
+    border: none;
+  }
 }
 
 /*# sourceMappingURL=landing_page.css.map */
