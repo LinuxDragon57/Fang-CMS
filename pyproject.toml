@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = 'Fang-CMS'
+version = '1.0.4'
+description = 'A Blog CMS written in Flask'
+license = 'AGPL'
+authors = [
+    { name="Tyler Gautney", email="tyler.gautney@codedragon.dev"},
+]
+readme='README.md'
+requires-python = ""
+dependencies = [
+    'click',
+    'Flask',
+    'Flask-SQLAlchemy',
+    'gunicorn',
+    'itsdangerous',
+    'Jinja2',
+    'MarkupSafe',
+    'mistune=2.0.2',
+    'psycopg2-binary',
+    'pycryptodomex',
+    'pyotp',
+    'python-dotenv',
+    'pywarp',
+    'segno',
+    'sqlalchemy',
+    'werkzeug'
+]
+
+[project.urls]
+Homepage = 'https://github.com/LinuxDragon57/Fang-CMS'

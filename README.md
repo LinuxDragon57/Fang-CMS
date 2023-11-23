@@ -3,7 +3,7 @@
 Fang is a blog Content management system designed to render content as efficient, static webpages. This project is 
 designed to be the backend for my personal "blog" at https://www.linuxdragon.dev/ where I intend to write everything 
 from short stories, to poems, to professional articles about computing technology and software engineering. My reasons 
-for writing this software is primarily because I wanted to make a project using Flask, and more specifically Python. 
+for writing this software is primarily because I wanted to make a project using Flask and, more specifically, Python. 
 It is named after Avatar Roku's Spirit Animal, a dragon named Fang, from Avatar: The Last Airbender.
 
 ## Licensing and Permissions:
