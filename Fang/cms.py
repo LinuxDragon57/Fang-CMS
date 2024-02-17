@@ -1,6 +1,7 @@
 from flask import (
-    Blueprint, request, render_template, flash, current_app, session, redirect, url_for, Markup, abort
+    Blueprint, request, render_template, flash, current_app, session, redirect, url_for, abort
 )
+from markupsafe import Markup
 from sqlalchemy.exc import IntegrityError
 from mistune import html as create_html
 from os import remove as remove_file, rename as rename_file

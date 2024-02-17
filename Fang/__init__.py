@@ -15,7 +15,7 @@ from Fang.routes import routes_bp
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
 
-    app.config.from_file('config.toml', load=tomllib.load)
+    app.config.from_file('config.toml', load=tomllib.load, text=False)
     app.config.from_mapping(SECRET_KEY=token_urlsafe(64), SQLALCHEMY_TRACK_MODIFICATIONS=False)
     app.config.update(
         SESSION_COOKIE_SECURE=True,
